@@ -1,3 +1,6 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
 /* Fuentes Locales Oficiales: Inter & Poppins */
 @font-face {
   font-family: 'Inter';
@@ -86,10 +89,6 @@
   font-display: swap;
   src: url('./assets/fonts/Poppins/Poppins-Black.ttf') format('truetype');
 }
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 @layer base {
   :root {
