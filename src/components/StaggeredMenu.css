@@ -1,0 +1,397 @@
+.staggered-menu-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.staggered-menu-wrapper.fixed-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  z-index: 60;
+  overflow: hidden;
+}
+
+.staggered-menu-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 3.5rem; /* 56px - Idéntico al header normal h-14 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem; /* px-4 (16px) - Idéntico al header normal en móvil */
+  background: transparent;
+  pointer-events: none;
+  z-index: 70;
+  border-bottom: 1px solid transparent;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+@media (min-width: 640px) {
+  .staggered-menu-header {
+    padding: 0 1.5rem; /* px-6 (24px) - Idéntico al header normal en tablet/escritorio */
+  }
+}
+
+/* Al abrirse el menú, el header adopta el fondo, desenfoque y borde exacto del header normal */
+.staggered-menu-wrapper[data-open] .staggered-menu-header {
+  background: rgba(9, 9, 11, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(39, 39, 42, 0.6);
+  pointer-events: auto;
+}
+
+.staggered-menu-header > * {
+  pointer-events: auto;
+}
+
+/* Logo de MTS en el Header Móvil (posición idéntica y estática sin saltos) */
+.sm-header-brand {
+  display: flex;
+  align-items: center;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.staggered-menu-wrapper[data-open] .sm-header-brand {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.sm-header-logo-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  outline: none;
+}
+
+.sm-header-logo-btn:focus-visible {
+  outline: 2px solid #eab308;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.sm-header-logo-img {
+  display: block;
+  height: 2rem; /* 32px (h-8) - Mismo tamaño que en el header visible normalmente */
+  width: auto;
+  object-fit: contain;
+  user-select: none;
+}
+
+/* Botón Toggle con Estilo Hamburguesa Apple HIG neutro (sin color primario, 44x40px hit target) */
+.sm-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  min-width: 2.75rem;
+  gap: 0.5rem;
+  background: rgba(39, 39, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 1px 3px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.85rem;
+  cursor: pointer;
+  color: #f4f4f5;
+  font-weight: 600;
+  line-height: 1;
+  overflow: visible;
+  transition: background-color 0.16s ease, border-color 0.16s ease, transform 0.12s ease;
+}
+
+.sm-toggle:hover {
+  background: rgba(63, 63, 70, 0.85);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+.sm-toggle:active {
+  background: rgba(24, 24, 27, 0.95);
+  transform: scale(0.97);
+}
+
+.sm-toggle:focus-visible {
+  outline: 2px solid #a1a1aa;
+  outline-offset: 2px;
+}
+
+.sm-toggle-textWrap {
+  position: relative;
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 0.75rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  letter-spacing: 0.02em;
+  width: var(--sm-toggle-width, auto);
+  min-width: var(--sm-toggle-width, auto);
+}
+
+.sm-toggle-textInner {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.sm-toggle-line {
+  display: block;
+  height: 1em;
+  line-height: 1;
+}
+
+/* Icono de Hamburguesa (3 barras que rotan a X al abrir) */
+.sm-icon-burger {
+  position: relative;
+  width: 16px;
+  height: 14px;
+  flex: 0 0 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sm-burger-bar {
+  position: absolute;
+  top: calc(50% - 1px);
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+/* Panel Lateral Desplegable con Tema Industrial Oscuro */
+.staggered-menu-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: clamp(280px, 85vw, 400px);
+  height: 100%;
+  background: rgba(9, 9, 11, 0.97);
+  border-left: 1px solid rgba(39, 39, 42, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  padding: 4.5rem 1.75rem 2rem 1.75rem;
+  overflow-y: auto;
+  z-index: 65;
+  pointer-events: auto;
+  opacity: 0;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.8);
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+[data-position='left'] .staggered-menu-panel {
+  right: auto;
+  left: 0;
+  border-left: none;
+  border-right: 1px solid rgba(39, 39, 42, 0.8);
+}
+
+/* Capas Pre-animadas escalonadas (Prelayers) en tonos Zinc/Carbón */
+.sm-prelayers {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: clamp(280px, 85vw, 400px);
+  pointer-events: none;
+  z-index: 62;
+  opacity: 0;
+}
+
+[data-position='left'] .sm-prelayers {
+  right: auto;
+  left: 0;
+}
+
+.sm-prelayer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  opacity: 0;
+}
+
+.sm-panel-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-top: 0.5rem;
+}
+
+/* Lista de Ítems del Menú */
+.sm-panel-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.sm-panel-itemWrap {
+  position: relative;
+  overflow: hidden;
+  line-height: 1.1;
+}
+
+.sm-panel-item {
+  position: relative;
+  color: #f4f4f5;
+  font-weight: 700;
+  font-size: 2.25rem;
+  cursor: pointer;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  transition: color 0.2s ease, transform 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  padding-right: 1.8em;
+  width: 100%;
+}
+
+.sm-panel-itemLabel {
+  display: inline-block;
+  will-change: transform;
+  transform-origin: 50% 100%;
+}
+
+.sm-panel-item:hover,
+.sm-panel-item:focus-visible {
+  color: var(--sm-accent, #eab308);
+  transform: translateX(4px);
+}
+
+/* Numeración de Ítems (01, 02, etc.) */
+.sm-panel-list[data-numbering] {
+  counter-reset: smItem;
+}
+
+.sm-panel-list[data-numbering] .sm-panel-item::after {
+  counter-increment: smItem;
+  content: counter(smItem, decimal-leading-zero);
+  position: absolute;
+  top: 0.15em;
+  right: 0.5em;
+  font-size: 0.875rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 500;
+  color: var(--sm-accent, #eab308);
+  letter-spacing: 0;
+  pointer-events: none;
+  user-select: none;
+  opacity: var(--sm-num-opacity, 0);
+}
+
+/* Sección de Acciones / Enlaces Inferiores */
+.sm-socials {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(39, 39, 42, 0.8);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sm-socials-title {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  letter-spacing: 0.04em;
+  color: var(--sm-accent, #eab308);
+}
+
+.sm-socials-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.sm-socials-link {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #a1a1aa;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.sm-socials-link:hover,
+.sm-socials-link:focus-visible {
+  color: #ffffff;
+  transform: translateX(2px);
+}
+
+@media (max-width: 640px) {
+  .staggered-menu-wrapper[data-open] .staggered-menu-header {
+    background: #09090b;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .staggered-menu-panel {
+    width: 100%;
+    left: 0;
+    right: 0;
+    padding: 4.25rem 1.5rem 1.75rem 1.5rem;
+    background: #09090b;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+  }
+
+  .sm-prelayers {
+    width: 100%;
+  }
+
+  .sm-panel-list {
+    gap: 0.85rem;
+  }
+
+  .sm-panel-item {
+    font-size: 1.5rem;
+  }
+}
