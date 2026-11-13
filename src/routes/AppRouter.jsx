@@ -23,6 +23,8 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../store/useAuth';
 import LoginPage from '../features/auth/LoginPage';
+import PrivacyPolicyPage from '../features/legal/PrivacyPolicyPage';
+import TermsOfServicePage from '../features/legal/TermsOfServicePage';
 const DashboardPage = lazy(() => import('../features/dashboard/DashboardPage'));
 const ClientsPage = lazy(() => import('../features/clients/ClientsPage'));
 const PlantsPage = lazy(() => import('../features/plants/PlantsPage'));
@@ -225,6 +227,25 @@ export const MainLayout = () => {
           <Outlet />
         </Suspense>
       </main>
+      <footer className="border-t border-zinc-800/70 bg-zinc-950/60 py-3 px-4 sm:px-6 lg:px-8 xl:px-10">
+        <div className="max-w-[1720px] mx-auto flex flex-wrap items-center justify-between gap-2 text-xs text-zinc-500">
+          <span>MTS Ingeniería Industrial &bull; Plataforma de Gestión</span>
+          <div className="flex flex-wrap items-center gap-4">
+            <Link
+              to="/privacidad"
+              className="text-zinc-400 hover:text-amber-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded px-1"
+            >
+              Política de privacidad
+            </Link>
+            <Link
+              to="/terminos"
+              className="text-zinc-400 hover:text-amber-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded px-1"
+            >
+              Condiciones del servicio
+            </Link>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
@@ -237,6 +258,13 @@ export const AppRouter = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/privacidad" element={<PrivacyPolicyPage />} />
+        <Route path="/politica-de-privacidad" element={<PrivacyPolicyPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+        <Route path="/terminos" element={<TermsOfServicePage />} />
+        <Route path="/condiciones" element={<TermsOfServicePage />} />
+        <Route path="/condiciones-del-servicio" element={<TermsOfServicePage />} />
+        <Route path="/terms-of-service" element={<TermsOfServicePage />} />
 
         <Route element={<ProtectedRoute />}>
           <Route element={<MainLayout />}>

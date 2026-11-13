@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useGoogleLogin } from '@react-oauth/google';
 import { Card, CardHeader, CardContent, Spinner } from '@heroui/react';
 import { AlertCircle, KeyRound, ShieldCheck } from 'lucide-react';
@@ -166,10 +166,26 @@ export const LoginPage = () => {
         </Card>
 
         {/* Pie de página discreto */}
-        <div className="text-center text-[11px] text-zinc-500 mt-6 sm:mt-8 font-mono flex items-center justify-center gap-1.5">
-          <ShieldCheck className="w-3.5 h-3.5 text-zinc-500" />
-          <span>MTS Systems &bull; Conexión Segura TLS 1.3</span>
-        </div>
+        <footer className="text-center text-xs text-zinc-400 mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5">
+          <span className="inline-flex items-center gap-1.5 font-mono text-[11px] text-zinc-500">
+            <ShieldCheck className="w-3.5 h-3.5 text-zinc-500" aria-hidden="true" />
+            <span>MTS Systems &bull; Conexión Segura TLS 1.3</span>
+          </span>
+          <span className="text-zinc-700" aria-hidden="true">&bull;</span>
+          <Link
+            to="/privacidad"
+            className="text-zinc-300 hover:text-amber-400 underline underline-offset-4 decoration-zinc-600 hover:decoration-amber-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded px-1"
+          >
+            Política de privacidad
+          </Link>
+          <span className="text-zinc-700" aria-hidden="true">&bull;</span>
+          <Link
+            to="/terminos"
+            className="text-zinc-300 hover:text-amber-400 underline underline-offset-4 decoration-zinc-600 hover:decoration-amber-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded px-1"
+          >
+            Condiciones del servicio
+          </Link>
+        </footer>
       </div>
     </div>
   );

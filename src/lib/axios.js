@@ -3,12 +3,12 @@ import axios from 'axios';
 const BASE_URL =
   import.meta.env.VITE_API_BASE_URL ||
   (import.meta.env.PROD
-    ? 'https://api.mtsingenieriaindustrial.com/api/v1'
+    ? 'https://api.ingenieriamts.com/api/v1'
     : 'http://localhost:8000/api/v1');
 
 /**
  * Instancia global de Axios para la plataforma MTS
- * En producción apunta a https://api.mtsingenieriaindustrial.com/api/v1
+ * En producción apunta a https://api.ingenieriamts.com/api/v1
  */
 const apiClient = axios.create({
   baseURL: BASE_URL,
