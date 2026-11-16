@@ -604,7 +604,7 @@ export const ExpensesPage = () => {
       <div className="hidden md:grid grid-cols-2 xl:grid-cols-4 gap-3.5">
         <div className="bg-[#101012] border border-zinc-800/80 rounded-2xl p-4 flex items-center justify-between shadow-sm">
           <div className="space-y-1">
-            <span className="text-[11px] font-mono text-zinc-500">
+            <span className="text-[11px] font-inter text-zinc-500">
               Gasto ejecutado
             </span>
             {isLoading ? (
@@ -617,7 +617,7 @@ export const ExpensesPage = () => {
                 <p className="text-2xl font-bold text-white tracking-tight">
                   {formatCurrency(metrics.totalSpent)}
                 </p>
-                <span className="text-[11px] font-mono text-zinc-400 block">
+                <span className="text-[11px] font-inter text-zinc-400 block">
                   {expenses.length} erogaciones en vista
                 </span>
               </>
@@ -630,7 +630,7 @@ export const ExpensesPage = () => {
 
         <div className="bg-[#101012] border border-[#6366F1]/25 hover:border-[#6366F1]/40 rounded-2xl p-4 flex items-center justify-between shadow-sm transition-colors">
           <div className="space-y-1">
-            <span className="text-[11px] font-mono text-[#818CF8] flex items-center gap-1.5">
+            <span className="text-[11px] font-inter text-[#818CF8] flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#6366F1]" />
               Costos directos
             </span>
@@ -644,7 +644,7 @@ export const ExpensesPage = () => {
                 <p className="text-2xl font-bold text-white tracking-tight">
                   {formatCurrency(metrics.directSpent)}
                 </p>
-                <span className="text-[11px] font-mono text-[#818CF8]/90 block">
+                <span className="text-[11px] font-inter text-[#818CF8]/90 block">
                   {metrics.directCount} vinculados a partidas
                 </span>
               </>
@@ -657,7 +657,7 @@ export const ExpensesPage = () => {
 
         <div className="bg-[#101012] border border-zinc-800/80 rounded-2xl p-4 flex items-center justify-between shadow-sm">
           <div className="space-y-1">
-            <span className="text-[11px] font-mono text-amber-400 flex items-center gap-1.5">
+            <span className="text-[11px] font-inter text-amber-400 flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
               Gastos generales
             </span>
@@ -671,7 +671,7 @@ export const ExpensesPage = () => {
                 <p className="text-2xl font-bold text-white tracking-tight">
                   {formatCurrency(metrics.generalSpent)}
                 </p>
-                <span className="text-[11px] font-mono text-zinc-400 block">
+                <span className="text-[11px] font-inter text-zinc-400 block">
                   {metrics.generalCount} indirectos de proyecto
                 </span>
               </>
@@ -684,7 +684,7 @@ export const ExpensesPage = () => {
 
         <div className="bg-[#101012] border border-emerald-950/50 hover:border-emerald-900/60 rounded-2xl p-4 flex items-center justify-between shadow-sm transition-colors">
           <div className="space-y-1">
-            <span className="text-[11px] font-mono text-emerald-400 flex items-center gap-1.5">
+            <span className="text-[11px] font-inter text-emerald-400 flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
               {isAdmin && metrics.activeQuote ? 'Margen proyecto' : 'Proyectos habilitados'}
             </span>
@@ -702,7 +702,7 @@ export const ExpensesPage = () => {
                 >
                   {formatCurrency(metrics.margin)}
                 </p>
-                <span className="text-[11px] font-mono text-zinc-400 block">
+                <span className="text-[11px] font-inter text-zinc-400 block">
                   Cotizado: {formatCurrency(metrics.quotedBudget)}
                 </span>
               </>
@@ -711,7 +711,7 @@ export const ExpensesPage = () => {
                 <p className="text-2xl font-bold text-white tracking-tight">
                   {quotes.length}
                 </p>
-                <span className="text-[11px] font-mono text-emerald-400/90 block">
+                <span className="text-[11px] font-inter text-emerald-400/90 block">
                   {isAdmin ? 'Selecciona proyecto para margen' : 'Asignados a tu cuenta'}
                 </span>
               </>
@@ -797,7 +797,7 @@ export const ExpensesPage = () => {
       </div>
 
       {/* Filtros con GlideSelect */}
-      <div className="relative z-30 flex flex-wrap items-center justify-between gap-2.5 sm:gap-3 pb-1 text-xs font-mono">
+      <div className="relative z-30 flex flex-wrap items-center justify-between gap-2.5 sm:gap-3 pb-1 text-xs font-inter">
         <div className="flex flex-wrap items-center gap-2">
           <div className="hidden sm:flex items-center gap-1.5 text-zinc-500 text-[11px] font-semibold">
             <Filter className="w-3.5 h-3.5 text-amber-400" />
@@ -894,7 +894,7 @@ export const ExpensesPage = () => {
           <button
             type="button"
             onClick={() => fetchExpenses(selectedQuoteFolio)}
-            className="flex items-center gap-1 px-3 py-1.5 bg-red-900/40 hover:bg-red-900/60 text-white rounded-lg transition-colors font-mono"
+            className="flex items-center gap-1 px-3 py-1.5 bg-red-900/40 hover:bg-red-900/60 text-white rounded-lg transition-colors font-inter"
           >
             <RotateCcw className="w-3 h-3" />
             <span>Reintentar</span>
@@ -917,7 +917,7 @@ export const ExpensesPage = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs font-sans">
               <thead>
-                <tr className="border-b border-zinc-800 bg-zinc-900/80 text-zinc-400 font-mono text-[11px] select-none">
+                <tr className="border-b border-zinc-800 bg-zinc-900/80 text-zinc-400 font-inter text-[11px] select-none">
                   <th className="py-3 px-4">Fecha</th>
                   <th className="py-3 px-4">Presupuesto</th>
                   <th className="py-3 px-4">Concepto</th>
@@ -927,7 +927,7 @@ export const ExpensesPage = () => {
                   <th className="py-3 px-4 text-right">Acciones</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-800/60 font-mono">
+              <tbody className="divide-y divide-zinc-800/60 font-inter">
                 {filteredExpenses.map((expense) => (
                   <tr
                     key={expense.id}
@@ -948,14 +948,14 @@ export const ExpensesPage = () => {
                     <td className="py-3.5 px-4 whitespace-nowrap font-sans">
                       {expense.partida_id ? (
                         <span
-                          className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-medium bg-[#6366F1]/10 text-[#818CF8] border border-[#6366F1]/30"
+                          className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-inter font-medium bg-[#6366F1]/10 text-[#818CF8] border border-[#6366F1]/30"
                           title={getPartidaLabel(expense)}
                         >
                           <Layers className="w-3 h-3" />
                           Directo · Partida
                         </span>
                       ) : (
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-mono font-medium bg-zinc-800 text-zinc-300 border border-zinc-700/80">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-inter font-medium bg-zinc-800 text-zinc-300 border border-zinc-700/80">
                           General
                         </span>
                       )}
@@ -1019,7 +1019,7 @@ export const ExpensesPage = () => {
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-2.5">
-                    <span className="font-mono text-xs font-bold text-amber-400 tracking-wide bg-amber-400/10 border border-amber-400/20 px-2.5 py-0.5 rounded-md truncate">
+                    <span className="font-inter text-xs font-bold text-amber-400 tracking-wide bg-amber-400/10 border border-amber-400/20 px-2.5 py-0.5 rounded-md truncate">
                       {getFolioLabel(expense)}
                     </span>
 
@@ -1028,11 +1028,11 @@ export const ExpensesPage = () => {
                       onClick={(e) => e.stopPropagation()}
                     >
                       {expense.partida_id ? (
-                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs sm:text-[10px] font-mono font-medium bg-[#6366F1]/10 text-[#818CF8] border border-[#6366F1]/30">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs sm:text-[10px] font-inter font-medium bg-[#6366F1]/10 text-[#818CF8] border border-[#6366F1]/30">
                           Directo
                         </span>
                       ) : (
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs sm:text-[10px] font-mono font-medium bg-zinc-800 text-zinc-300 border border-zinc-700/80">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs sm:text-[10px] font-inter font-medium bg-zinc-800 text-zinc-300 border border-zinc-700/80">
                           General
                         </span>
                       )}
@@ -1061,12 +1061,12 @@ export const ExpensesPage = () => {
                   <div className="mt-2.5 space-y-1 text-xs">
                     {projectName && <p className="text-zinc-400 truncate">{projectName}</p>}
                     {expense.partida_id && (
-                      <p className="text-[#818CF8] text-[11px] truncate font-mono">
+                      <p className="text-[#818CF8] text-[11px] truncate font-inter">
                         Partida: {getPartidaLabel(expense)}
                       </p>
                     )}
                     {expense.registrado_por_nombre && (
-                      <p className="text-zinc-500 text-[11px] font-mono flex items-center gap-1">
+                      <p className="text-zinc-500 text-[11px] font-inter flex items-center gap-1">
                         <UserCheck className="w-3 h-3" />
                         <span className="truncate">{expense.registrado_por_nombre}</span>
                       </p>
@@ -1076,10 +1076,10 @@ export const ExpensesPage = () => {
 
                 <div className="mt-4 pt-3 border-t border-zinc-800/60 flex items-end justify-between">
                   <div>
-                    <p className="text-2xl sm:text-xl font-bold text-white tracking-tight leading-none font-mono">
+                    <p className="text-2xl sm:text-xl font-bold text-white tracking-tight leading-none font-inter">
                       {formatCurrency(expense.monto)}
                     </p>
-                    <p className="text-xs sm:text-[10px] font-mono text-zinc-500 mt-1.5 flex items-center gap-1">
+                    <p className="text-xs sm:text-[10px] font-inter text-zinc-500 mt-1.5 flex items-center gap-1">
                       <Calendar className="w-3 h-3 text-zinc-500" />
                       <span>
                         {expense.fecha_gasto
@@ -1097,7 +1097,7 @@ export const ExpensesPage = () => {
                         className="h-9 sm:h-8 px-3 sm:px-2.5 rounded-xl sm:rounded-lg border border-zinc-800 hover:border-zinc-700 bg-zinc-900/90 hover:bg-zinc-800 text-zinc-200 hover:text-amber-400 text-xs font-medium flex items-center gap-1.5 transition-all"
                       >
                         <Pencil className="w-3.5 h-3.5" />
-                        <span className="font-mono text-xs sm:text-[11px]">Editar</span>
+                        <span className="font-inter text-xs sm:text-[11px]">Editar</span>
                       </button>
                     ) : (
                       <button
@@ -1106,7 +1106,7 @@ export const ExpensesPage = () => {
                         className="h-9 sm:h-8 px-3 sm:px-2.5 rounded-xl sm:rounded-lg border border-zinc-800 hover:border-zinc-700 bg-zinc-900/90 hover:bg-zinc-800 text-zinc-200 text-xs font-medium flex items-center gap-1.5 transition-all"
                       >
                         <Eye className="w-3.5 h-3.5" />
-                        <span className="font-mono text-xs sm:text-[11px]">Detalle</span>
+                        <span className="font-inter text-xs sm:text-[11px]">Detalle</span>
                       </button>
                     )}
                   </div>
@@ -1120,7 +1120,7 @@ export const ExpensesPage = () => {
       {/* Infinite scroll sentinel & paginación */}
       {!isLoading && !error && hasMore && !searchTerm && selectedTypeFilter === 'todos' && (
         <div ref={sentinelRef} className="flex justify-center py-6">
-          <div className="flex items-center gap-2 px-4 py-2 bg-zinc-900/60 border border-zinc-800/80 rounded-xl text-zinc-400 text-xs font-mono">
+          <div className="flex items-center gap-2 px-4 py-2 bg-zinc-900/60 border border-zinc-800/80 rounded-xl text-zinc-400 text-xs font-inter">
             <Spinner size="sm" color="warning" className="scale-75" />
             <span>Cargando más gastos...</span>
           </div>
@@ -1168,7 +1168,7 @@ export const ExpensesPage = () => {
 
               <div className="space-y-3.5">
                 <div className="space-y-1">
-                  <label className="text-[11px] font-mono text-zinc-400 block font-semibold">
+                  <label className="text-[11px] font-inter text-zinc-400 block font-semibold">
                     Presupuesto / proyecto *
                   </label>
                   <select
@@ -1194,7 +1194,7 @@ export const ExpensesPage = () => {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[11px] font-mono text-zinc-400 block font-semibold">
+                  <label className="text-[11px] font-inter text-zinc-400 block font-semibold">
                     Partida específica (opcional)
                   </label>
                   <select
@@ -1217,7 +1217,7 @@ export const ExpensesPage = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="space-y-1">
-                    <label className="text-[11px] font-mono text-zinc-400 block font-semibold">
+                    <label className="text-[11px] font-inter text-zinc-400 block font-semibold">
                       Monto erogado *
                     </label>
                     <input
@@ -1228,11 +1228,11 @@ export const ExpensesPage = () => {
                       placeholder="0.00"
                       value={expenseForm.monto}
                       onChange={(e) => setExpenseForm({ ...expenseForm, monto: e.target.value })}
-                      className="w-full h-10 sm:h-9 px-3 bg-zinc-950/70 border border-zinc-800 rounded-xl text-sm sm:text-xs text-zinc-200 font-mono focus:border-amber-400 outline-none transition-colors"
+                      className="w-full h-10 sm:h-9 px-3 bg-zinc-950/70 border border-zinc-800 rounded-xl text-sm sm:text-xs text-zinc-200 font-inter focus:border-amber-400 outline-none transition-colors"
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[11px] font-mono text-zinc-400 block font-semibold">
+                    <label className="text-[11px] font-inter text-zinc-400 block font-semibold">
                       Fecha del gasto *
                     </label>
                     <input
@@ -1242,13 +1242,13 @@ export const ExpensesPage = () => {
                       onChange={(e) =>
                         setExpenseForm({ ...expenseForm, fecha_gasto: e.target.value })
                       }
-                      className="w-full h-10 sm:h-9 px-3 bg-zinc-950/70 border border-zinc-800 rounded-xl text-sm sm:text-xs text-zinc-200 font-mono focus:border-amber-400 outline-none transition-colors"
+                      className="w-full h-10 sm:h-9 px-3 bg-zinc-950/70 border border-zinc-800 rounded-xl text-sm sm:text-xs text-zinc-200 font-inter focus:border-amber-400 outline-none transition-colors"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[11px] font-mono text-zinc-400 block font-semibold">
+                  <label className="text-[11px] font-inter text-zinc-400 block font-semibold">
                     Concepto / descripción *
                   </label>
                   <textarea
@@ -1298,7 +1298,7 @@ export const ExpensesPage = () => {
             >
               <div className="flex items-start justify-between border-b border-zinc-800/80 pb-3">
                 <div>
-                  <span className="text-amber-400 font-mono text-xs font-bold">
+                  <span className="text-amber-400 font-inter text-xs font-bold">
                     Comprobante de gasto • {getFolioLabel(selectedExpenseDetail)}
                   </span>
                   <h3 className="text-base font-bold text-white tracking-tight mt-1 font-heading">
@@ -1315,23 +1315,23 @@ export const ExpensesPage = () => {
               </div>
 
               {isLoadingDetail ? (
-                <div className="py-4 text-center text-xs font-mono text-zinc-500">
+                <div className="py-4 text-center text-xs font-inter text-zinc-500">
                   Consultando registro...
                 </div>
               ) : (
                 <div className="space-y-3 bg-zinc-950/60 border border-zinc-800 rounded-xl p-4 text-xs">
                   <div className="flex items-center justify-between pb-2 border-b border-zinc-800/70">
-                    <span className="font-mono text-zinc-400 text-[11px]">
+                    <span className="font-inter text-zinc-400 text-[11px]">
                       Monto erogado:
                     </span>
-                    <span className="font-mono text-xl font-bold text-white">
+                    <span className="font-inter text-xl font-bold text-white">
                       {formatCurrency(selectedExpenseDetail.monto)}
                     </span>
                   </div>
 
                   <div className="grid grid-cols-2 gap-3 pt-1">
                     <div>
-                      <span className="text-[10px] font-mono text-zinc-500 block">
+                      <span className="text-[10px] font-inter text-zinc-500 block">
                         Clasificación
                       </span>
                       <span className="text-zinc-200 font-medium mt-0.5 block">
@@ -1341,10 +1341,10 @@ export const ExpensesPage = () => {
                       </span>
                     </div>
                     <div>
-                      <span className="text-[10px] font-mono text-zinc-500 block">
+                      <span className="text-[10px] font-inter text-zinc-500 block">
                         Fecha de gasto
                       </span>
-                      <span className="text-zinc-200 font-mono mt-0.5 block">
+                      <span className="text-zinc-200 font-inter mt-0.5 block">
                         {selectedExpenseDetail.fecha_gasto
                           ? new Date(selectedExpenseDetail.fecha_gasto).toLocaleDateString('es-MX')
                           : '—'}
@@ -1354,7 +1354,7 @@ export const ExpensesPage = () => {
 
                   {selectedExpenseDetail.registrado_por_nombre && (
                     <div className="pt-2 border-t border-zinc-800/70">
-                      <span className="text-[10px] font-mono text-zinc-500 block">
+                      <span className="text-[10px] font-inter text-zinc-500 block">
                         Registrado por
                       </span>
                       <p className="text-zinc-200 mt-0.5">
@@ -1365,7 +1365,7 @@ export const ExpensesPage = () => {
 
                   {selectedExpenseDetail.partida_id && (
                     <div className="pt-2 border-t border-zinc-800/70">
-                      <span className="text-[10px] font-mono text-zinc-500 block">
+                      <span className="text-[10px] font-inter text-zinc-500 block">
                         Partida vinculada
                       </span>
                       <p className="text-[#818CF8] mt-0.5">
@@ -1376,7 +1376,7 @@ export const ExpensesPage = () => {
 
                   {getProjectName(selectedExpenseDetail) && (
                     <div className="pt-2 border-t border-zinc-800/70">
-                      <span className="text-[10px] font-mono text-zinc-500 block">
+                      <span className="text-[10px] font-inter text-zinc-500 block">
                         Proyecto
                       </span>
                       <p className="text-zinc-300 mt-0.5">

@@ -464,7 +464,7 @@ export const ClientsPage = () => {
       </div>
 
       {/* Filtro con GlideSelect */}
-      <div className="relative z-30 flex flex-wrap items-center justify-between gap-2.5 sm:gap-3 pb-1 text-xs font-mono">
+      <div className="relative z-30 flex flex-wrap items-center justify-between gap-2.5 sm:gap-3 pb-1 text-xs font-inter">
         <div className="flex items-center gap-2">
           <div className="hidden sm:flex items-center gap-1.5 text-zinc-500 text-[11px] font-semibold">
             <Filter className="w-3.5 h-3.5 text-amber-400" />
@@ -540,7 +540,7 @@ export const ClientsPage = () => {
           <button
             type="button"
             onClick={fetchClients}
-            className="flex items-center gap-1 px-3 py-1.5 bg-red-900/40 hover:bg-red-900/60 text-white rounded-lg transition-colors font-mono"
+            className="flex items-center gap-1 px-3 py-1.5 bg-red-900/40 hover:bg-red-900/60 text-white rounded-lg transition-colors font-inter"
           >
             <RotateCcw className="w-3 h-3" />
             <span>Reintentar</span>
@@ -563,7 +563,7 @@ export const ClientsPage = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs font-sans">
               <thead>
-                <tr className="border-b border-zinc-800 bg-zinc-900/80 text-zinc-400 font-mono text-[11px] select-none">
+                <tr className="border-b border-zinc-800 bg-zinc-900/80 text-zinc-400 font-inter text-[11px] select-none">
                   <th className="py-3 px-4">Empresa</th>
                   <th className="py-3 px-4">Dirección</th>
                   <th className="py-3 px-4">Plantas</th>
@@ -571,7 +571,7 @@ export const ClientsPage = () => {
                   <th className="py-3 px-4 text-right">Acciones</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-800/60 font-mono">
+              <tbody className="divide-y divide-zinc-800/60 font-inter">
                 {filteredClients.map((client) => {
                   const clientPlants = plantsByClientMap[client.id] || [];
                   return (
@@ -656,7 +656,7 @@ export const ClientsPage = () => {
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-2.5">
-                    <span className="inline-flex items-center gap-1.5 font-mono text-[11px] font-bold text-amber-400 tracking-wide bg-amber-400/10 border border-amber-400/20 px-2.5 py-0.5 rounded-md">
+                    <span className="inline-flex items-center gap-1.5 font-inter text-[11px] font-bold text-amber-400 tracking-wide bg-amber-400/10 border border-amber-400/20 px-2.5 py-0.5 rounded-md">
                       <Building2 className="w-3 h-3" />
                       <span>Corporativo</span>
                     </span>
@@ -666,12 +666,12 @@ export const ClientsPage = () => {
                       onClick={(e) => e.stopPropagation()}
                     >
                       {clientPlants.length > 0 ? (
-                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs sm:text-[10px] font-mono font-medium bg-[#6366F1]/10 text-[#818CF8] border border-[#6366F1]/30">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs sm:text-[10px] font-inter font-medium bg-[#6366F1]/10 text-[#818CF8] border border-[#6366F1]/30">
                           <Factory className="w-3 h-3 sm:w-2.5 sm:h-2.5" />
                           {clientPlants.length} {clientPlants.length === 1 ? 'planta' : 'plantas'}
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs sm:text-[10px] font-mono font-medium bg-zinc-800 text-zinc-300 border border-zinc-700/80">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs sm:text-[10px] font-inter font-medium bg-zinc-800 text-zinc-300 border border-zinc-700/80">
                           Matriz
                         </span>
                       )}
@@ -709,7 +709,7 @@ export const ClientsPage = () => {
                 </div>
 
                 <div className="mt-4 pt-3 border-t border-zinc-800/60 flex items-center justify-between">
-                  <span className="font-mono text-xs sm:text-[10px] text-zinc-500">
+                  <span className="font-inter text-xs sm:text-[10px] text-zinc-500">
                     {client.created_at
                       ? new Date(client.created_at).toLocaleDateString('es-MX')
                       : 'Activo'}
@@ -725,7 +725,7 @@ export const ClientsPage = () => {
                       className="h-9 sm:h-8 px-3 sm:px-2.5 rounded-xl sm:rounded-lg border border-zinc-800 hover:border-zinc-700 bg-zinc-900/90 hover:bg-zinc-800 text-zinc-200 hover:text-amber-400 text-xs font-medium flex items-center gap-1.5 transition-all"
                     >
                       <Pencil className="w-3.5 h-3.5" />
-                      <span className="font-mono text-xs sm:text-[11px]">Editar</span>
+                      <span className="font-inter text-xs sm:text-[11px]">Editar</span>
                     </button>
                   </div>
                 </div>
@@ -742,7 +742,7 @@ export const ClientsPage = () => {
             type="button"
             onClick={loadMoreClients}
             disabled={isLoadingMore}
-            className="px-5 py-2.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white rounded-xl text-xs font-mono transition-all flex items-center gap-2 cursor-pointer shadow-sm disabled:opacity-50"
+            className="px-5 py-2.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white rounded-xl text-xs font-inter transition-all flex items-center gap-2 cursor-pointer shadow-sm disabled:opacity-50"
           >
             {isLoadingMore ? (
               <>
@@ -795,7 +795,7 @@ export const ClientsPage = () => {
 
               <div className="space-y-3.5">
                 <div className="space-y-1">
-                  <label className="text-[11px] font-mono text-zinc-400 block font-semibold">
+                  <label className="text-[11px] font-inter text-zinc-400 block font-semibold">
                     Razón social / Empresa *
                   </label>
                   <input
@@ -810,7 +810,7 @@ export const ClientsPage = () => {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[11px] font-mono text-zinc-400 block font-semibold">
+                  <label className="text-[11px] font-inter text-zinc-400 block font-semibold">
                     Dirección operativa *
                   </label>
                   <textarea
@@ -865,7 +865,7 @@ export const ClientsPage = () => {
             >
               <div className="flex items-start justify-between border-b border-zinc-800/80 pb-3">
                 <div>
-                  <span className="text-amber-400 font-mono text-xs font-bold">
+                  <span className="text-amber-400 font-inter text-xs font-bold">
                     Ficha corporativa
                   </span>
                   <h3 className="text-base sm:text-lg font-bold text-white tracking-tight mt-0.5 font-heading">
@@ -884,7 +884,7 @@ export const ClientsPage = () => {
 
               <div className="bg-zinc-950/60 border border-zinc-800 rounded-xl p-3.5 text-xs space-y-2.5">
                 <div>
-                  <span className="text-[11px] font-mono text-zinc-400 block">
+                  <span className="text-[11px] font-inter text-zinc-400 block">
                     Dirección operativa / fiscal
                   </span>
                   <p className="text-zinc-200 mt-1 flex items-start gap-1.5 leading-relaxed">
@@ -893,10 +893,10 @@ export const ClientsPage = () => {
                   </p>
                 </div>
                 <div className="pt-2 border-t border-zinc-800/70">
-                  <span className="text-[11px] font-mono text-zinc-400 block">
+                  <span className="text-[11px] font-inter text-zinc-400 block">
                     Registro en sistema
                   </span>
-                  <span className="text-zinc-300 font-mono mt-0.5 block">
+                  <span className="text-zinc-300 font-inter mt-0.5 block">
                     {selectedClientDetail.created_at
                       ? new Date(selectedClientDetail.created_at).toLocaleString('es-MX')
                       : '—'}
@@ -907,7 +907,7 @@ export const ClientsPage = () => {
               {/* Plantas asociadas a este cliente */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono text-zinc-300 font-semibold flex items-center gap-1.5">
+                  <span className="text-xs font-inter text-zinc-300 font-semibold flex items-center gap-1.5">
                     <Factory className="w-3.5 h-3.5 text-[#818CF8]" />
                     <span>Plantas vinculadas ({detailPlants.length})</span>
                   </span>
@@ -917,7 +917,7 @@ export const ClientsPage = () => {
                       setSelectedClientDetail(null);
                       navigate(`/plantas?cliente=${encodeURIComponent(selectedClientDetail.nombre)}`);
                     }}
-                    className="text-xs font-mono text-[#818CF8] hover:underline flex items-center gap-1"
+                    className="text-xs font-inter text-[#818CF8] hover:underline flex items-center gap-1"
                   >
                     <span>Ir a Plantas</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
@@ -925,7 +925,7 @@ export const ClientsPage = () => {
                 </div>
 
                 {isLoadingDetail ? (
-                  <div className="py-4 text-center text-xs font-mono text-zinc-500">
+                  <div className="py-4 text-center text-xs font-inter text-zinc-500">
                     Consultando sucursales...
                   </div>
                 ) : detailPlants.length === 0 ? (
@@ -940,12 +940,12 @@ export const ClientsPage = () => {
                         className="p-2.5 bg-zinc-950/70 border border-zinc-800/80 rounded-xl flex items-center justify-between gap-2 text-xs"
                       >
                         <div className="min-w-0">
-                          <span className="font-mono font-bold text-[#818CF8]">
+                          <span className="font-inter font-bold text-[#818CF8]">
                             Planta {plant.numero_planta}
                           </span>
                           <p className="text-zinc-400 truncate text-[11px]">{plant.ubicacion}</p>
                         </div>
-                        <span className="font-mono text-[10px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full shrink-0">
+                        <span className="font-inter text-[10px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full shrink-0">
                           Activa
                         </span>
                       </div>
@@ -958,7 +958,7 @@ export const ClientsPage = () => {
                   onSubmit={handleQuickAddPlant}
                   className="p-3 bg-zinc-950/80 border border-zinc-800 rounded-xl space-y-2.5"
                 >
-                  <span className="text-[10px] font-mono text-zinc-400 font-semibold block">
+                  <span className="text-[10px] font-inter text-zinc-400 font-semibold block">
                     + Vincular nueva planta rápida
                   </span>
                   <div className="grid grid-cols-1 sm:grid-cols-12 gap-2">
@@ -987,7 +987,7 @@ export const ClientsPage = () => {
                     <button
                       type="submit"
                       disabled={isAddingPlant}
-                      className="sm:col-span-3 h-10 sm:h-9 px-3 bg-zinc-800 hover:bg-zinc-700 active:scale-[0.98] text-amber-400 font-semibold rounded-lg text-xs font-mono transition-all cursor-pointer disabled:opacity-50"
+                      className="sm:col-span-3 h-10 sm:h-9 px-3 bg-zinc-800 hover:bg-zinc-700 active:scale-[0.98] text-amber-400 font-semibold rounded-lg text-xs font-inter transition-all cursor-pointer disabled:opacity-50"
                     >
                       {isAddingPlant ? 'Agregando...' : 'Agregar Planta'}
                     </button>

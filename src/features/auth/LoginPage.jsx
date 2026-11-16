@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useGoogleLogin } from '@react-oauth/google';
 import { Card, CardHeader, CardContent, Spinner } from '@heroui/react';
 import { AlertCircle, KeyRound, ShieldCheck } from 'lucide-react';
-import apiClient from '../../lib/axios';
+import apiClient, { isTokenExpiringSoon, refreshSession } from '../../lib/axios';
 import { useAuth } from '../../store/useAuth';
 import logoMts from '../../assets/logo.svg';
 
@@ -32,6 +32,43 @@ export const LoginPage = () => {
   const [codigoInvitacion, setCodigoInvitacion] = useState('');
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  // Si la PWA abre en /login pero aún conserva una sesión o refreshToken vigente, restaurar automáticamente
+  useEffect(() => {
+    let cancelled = false;
+
+    const restoreSessionIfAvailable = async () => {
+      const currentToken = localStorage.getItem('token');
+      const currentRefresh = localStorage.getItem('refreshToken');
+
+      if (currentToken && !isTokenExpiringSoon(currentToken, 30)) {
+        navigate('/', { replace: true });
+        return;
+      }
+
+      if (!currentRefresh) return;
+
+      try {
+        setIsLoading(true);
+        await refreshSession();
+        if (!cancelled) {
+          navigate('/', { replace: true });
+        }
+      } catch {
+        // El interceptor ya purga la sesión si fue rechazada por el servidor;
+        // si fue offline transitorio, dejamos al usuario intentar o permanecer aquí.
+      } finally {
+        if (!cancelled) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    restoreSessionIfAvailable();
+    return () => {
+      cancelled = true;
+    };
+  }, [navigate]);
 
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
@@ -167,7 +204,7 @@ export const LoginPage = () => {
 
         {/* Pie de página discreto */}
         <footer className="text-center text-xs text-zinc-400 mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5">
-          <span className="inline-flex items-center gap-1.5 font-mono text-[11px] text-zinc-500">
+          <span className="inline-flex items-center gap-1.5 font-inter text-[11px] text-zinc-500">
             <ShieldCheck className="w-3.5 h-3.5 text-zinc-500" aria-hidden="true" />
             <span>MTS Systems &bull; Conexión Segura TLS 1.3</span>
           </span>

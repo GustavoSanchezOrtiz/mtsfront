@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import {
   BrowserRouter,
   Routes,
@@ -22,6 +22,7 @@ import {
   UserCheck,
 } from 'lucide-react';
 import { useAuth } from '../store/useAuth';
+import { isTokenExpiringSoon, refreshSession } from '../lib/axios';
 import LoginPage from '../features/auth/LoginPage';
 import PrivacyPolicyPage from '../features/legal/PrivacyPolicyPage';
 import TermsOfServicePage from '../features/legal/TermsOfServicePage';
@@ -199,7 +200,7 @@ export const MainLayout = () => {
             <p className="text-xs font-medium text-zinc-200 leading-tight truncate max-w-[160px]">
               {user?.nombre || user?.correo || 'Operador'}
             </p>
-            <p className="text-[10px] text-zinc-400 font-mono">
+            <p className="text-[10px] text-zinc-400 font-inter">
               {user?.rol === 'admin' ? 'Administrador' : 'Empleado'}
             </p>
           </Link>
@@ -251,11 +252,48 @@ export const MainLayout = () => {
 };
 
 /**
+ * Mantiene viva y sincronizada la sesión PWA al iniciar, al volver de segundo plano
+ * o recuperar conectividad, renovando silenciosamente antes de que expire el JWT.
+ */
+const AuthSessionKeeper = () => {
+  useEffect(() => {
+    const ensureFreshSession = () => {
+      const token = localStorage.getItem('token');
+      const refreshToken = localStorage.getItem('refreshToken');
+      if (refreshToken && isTokenExpiringSoon(token, 120)) {
+        refreshSession().catch(() => {});
+      }
+    };
+
+    ensureFreshSession();
+
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') {
+        ensureFreshSession();
+      }
+    };
+
+    window.addEventListener('online', ensureFreshSession);
+    document.addEventListener('visibilitychange', handleVisibility);
+    const intervalId = window.setInterval(ensureFreshSession, 15 * 60 * 1000);
+
+    return () => {
+      window.removeEventListener('online', ensureFreshSession);
+      document.removeEventListener('visibilitychange', handleVisibility);
+      window.clearInterval(intervalId);
+    };
+  }, []);
+
+  return null;
+};
+
+/**
  * Enrutador Global MTS con protección RBAC
  */
 export const AppRouter = () => {
   return (
     <BrowserRouter>
+      <AuthSessionKeeper />
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/privacidad" element={<PrivacyPolicyPage />} />

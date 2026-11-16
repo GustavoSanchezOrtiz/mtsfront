@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import apiClient from '../lib/axios';
+import apiClient, { clearStoredAuth } from '../lib/axios';
 
 /**
  * Helper para obtener valores iniciales seguros desde localStorage
@@ -26,6 +26,19 @@ export const useAuth = create((set, get) => ({
   isAuthenticated: !!(localStorage.getItem('token') || localStorage.getItem('refreshToken')),
 
   /**
+   * Sincroniza el estado en memoria con localStorage (tras refresh silencioso o cambios entre pestañas)
+   */
+  syncFromStorage: () => {
+    const { token, refreshToken, user } = getInitialState();
+    set({
+      token,
+      refreshToken,
+      user,
+      isAuthenticated: !!(token || refreshToken),
+    });
+  },
+
+  /**
    * Registra el inicio de sesión exitoso o renovación con tokens
    * @param {string} accessToken - JWT de acceso emitido por FastAPI
    * @param {string|object} refreshTokenOrUser - Refresh Token de larga duración o datos de usuario
@@ -40,7 +53,7 @@ export const useAuth = create((set, get) => ({
       user = maybeUser || null;
     } else {
       user = refreshTokenOrUser || null;
-      refreshToken = get().refreshToken || localStorage.getItem('refreshToken');
+      refreshToken = localStorage.getItem('refreshToken') || get().refreshToken;
     }
 
     if (accessToken) {
@@ -69,7 +82,7 @@ export const useAuth = create((set, get) => ({
     if (refreshToken) localStorage.setItem('refreshToken', refreshToken);
     set({
       token: accessToken,
-      refreshToken,
+      refreshToken: refreshToken || localStorage.getItem('refreshToken') || get().refreshToken,
       isAuthenticated: true,
     });
   },
@@ -91,9 +104,7 @@ export const useAuth = create((set, get) => ({
     if (currentToken) {
       apiClient.post('/auth/logout').catch(() => {});
     }
-    localStorage.removeItem('token');
-    localStorage.removeItem('refreshToken');
-    localStorage.removeItem('user');
+    clearStoredAuth();
     set({
       token: null,
       refreshToken: null,
@@ -102,3 +113,14 @@ export const useAuth = create((set, get) => ({
     });
   },
 }));
+
+if (typeof window !== 'undefined') {
+  window.addEventListener('mts:auth-sync', () => {
+    useAuth.getState().syncFromStorage();
+  });
+  window.addEventListener('storage', (event) => {
+    if (!event.key || event.key === 'token' || event.key === 'refreshToken' || event.key === 'user') {
+      useAuth.getState().syncFromStorage();
+    }
+  });
+}

@@ -150,7 +150,7 @@ export function QuotesTableSkeleton({ rows = 8 }) {
 export function QuoteDetailItemsSkeleton({ count = 3 }) {
   return (
     <div className="border border-zinc-800 rounded-xl overflow-hidden bg-zinc-950/60">
-      <table className="w-full text-left text-xs font-mono">
+      <table className="w-full text-left text-xs font-inter">
         <thead className="bg-zinc-900/90 text-[10px] text-zinc-400 border-b border-zinc-800">
           <tr>
             <th className="px-3 py-2 text-center w-8">#</th>
@@ -272,7 +272,7 @@ export function GenericTableSkeleton({ columns = ['Concepto', 'Relación', 'Deta
       <div className="overflow-x-auto">
         <table className="w-full text-left text-xs font-sans">
           <thead>
-            <tr className="border-b border-zinc-800 bg-zinc-900/80 text-zinc-400 font-mono text-[11px] select-none">
+            <tr className="border-b border-zinc-800 bg-zinc-900/80 text-zinc-400 font-inter text-[11px] select-none">
               {columns.map((col, idx) => (
                 <th
                   key={idx}
@@ -283,7 +283,7 @@ export function GenericTableSkeleton({ columns = ['Concepto', 'Relación', 'Deta
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-zinc-800/60 font-mono">
+          <tbody className="divide-y divide-zinc-800/60 font-inter">
             {Array.from({ length: rows }).map((_, rIdx) => (
               <tr key={rIdx} className="hover:bg-zinc-900/30">
                 {columns.map((_, cIdx) => (

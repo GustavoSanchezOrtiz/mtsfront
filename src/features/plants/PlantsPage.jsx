@@ -476,7 +476,7 @@ export const PlantsPage = () => {
       </div>
 
       {/* Filtro por Cliente con GlideSelect */}
-      <div className="relative z-30 flex flex-wrap items-center justify-between gap-2.5 sm:gap-3 pb-1 text-xs font-mono">
+      <div className="relative z-30 flex flex-wrap items-center justify-between gap-2.5 sm:gap-3 pb-1 text-xs font-inter">
         <div className="flex items-center gap-2">
           <div className="hidden sm:flex items-center gap-1.5 text-zinc-500 text-[11px] font-semibold">
             <Filter className="w-3.5 h-3.5 text-amber-400" />
@@ -552,7 +552,7 @@ export const PlantsPage = () => {
           <button
             type="button"
             onClick={() => fetchPlants(selectedClientFilter)}
-            className="flex items-center gap-1 px-3 py-1.5 bg-red-900/40 hover:bg-red-900/60 text-white rounded-lg transition-colors font-mono"
+            className="flex items-center gap-1 px-3 py-1.5 bg-red-900/40 hover:bg-red-900/60 text-white rounded-lg transition-colors font-inter"
           >
             <RotateCcw className="w-3 h-3" />
             <span>Reintentar</span>
@@ -575,7 +575,7 @@ export const PlantsPage = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs font-sans">
               <thead>
-                <tr className="border-b border-zinc-800 bg-zinc-900/80 text-zinc-400 font-mono text-[11px] select-none">
+                <tr className="border-b border-zinc-800 bg-zinc-900/80 text-zinc-400 font-inter text-[11px] select-none">
                   <th className="py-3 px-4">Planta</th>
                   <th className="py-3 px-4">Cliente</th>
                   <th className="py-3 px-4">Ubicación</th>
@@ -583,7 +583,7 @@ export const PlantsPage = () => {
                   <th className="py-3 px-4 text-right">Acciones</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-800/60 font-mono">
+              <tbody className="divide-y divide-zinc-800/60 font-inter">
                 {filteredPlants.map((plant) => {
                   const clientObj = clientMap[plant.cliente_id];
                   return (
@@ -662,7 +662,7 @@ export const PlantsPage = () => {
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-2.5">
-                    <span className="font-mono text-xs font-bold text-amber-400 tracking-wide bg-amber-400/10 border border-amber-400/20 px-2.5 py-0.5 rounded-md">
+                    <span className="font-inter text-xs font-bold text-amber-400 tracking-wide bg-amber-400/10 border border-amber-400/20 px-2.5 py-0.5 rounded-md">
                       PLANTA {plant.numero_planta}
                     </span>
 
@@ -670,7 +670,7 @@ export const PlantsPage = () => {
                       className="flex items-center gap-1.5 shrink-0"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs sm:text-[10px] font-mono font-medium bg-green-500/10 text-green-400 border border-green-500/25">
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs sm:text-[10px] font-inter font-medium bg-green-500/10 text-green-400 border border-green-500/25">
                         Activa
                       </span>
 
@@ -706,7 +706,7 @@ export const PlantsPage = () => {
                 </div>
 
                 <div className="mt-4 pt-3 border-t border-zinc-800/60 flex items-center justify-between">
-                  <span className="font-mono text-xs sm:text-[10px] text-zinc-500">
+                  <span className="font-inter text-xs sm:text-[10px] text-zinc-500">
                     {plant.created_at
                       ? new Date(plant.created_at).toLocaleDateString('es-MX')
                       : 'Activa'}
@@ -719,7 +719,7 @@ export const PlantsPage = () => {
                       className="h-9 sm:h-8 px-3 sm:px-2.5 rounded-xl sm:rounded-lg border border-zinc-800 hover:border-zinc-700 bg-zinc-900/90 hover:bg-zinc-800 text-zinc-200 hover:text-amber-400 text-xs font-medium flex items-center gap-1.5 transition-all"
                     >
                       <Pencil className="w-3.5 h-3.5" />
-                      <span className="font-mono text-xs sm:text-[11px]">Editar</span>
+                      <span className="font-inter text-xs sm:text-[11px]">Editar</span>
                     </button>
                   </div>
                 </div>
@@ -736,7 +736,7 @@ export const PlantsPage = () => {
             type="button"
             onClick={loadMorePlants}
             disabled={isLoadingMore}
-            className="px-5 py-2.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white rounded-xl text-xs font-mono transition-all flex items-center gap-2 cursor-pointer shadow-sm disabled:opacity-50"
+            className="px-5 py-2.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white rounded-xl text-xs font-inter transition-all flex items-center gap-2 cursor-pointer shadow-sm disabled:opacity-50"
           >
             {isLoadingMore ? (
               <>
@@ -803,7 +803,7 @@ export const PlantsPage = () => {
                 />
 
                 <div className="space-y-1">
-                  <label className="text-[11px] font-mono text-zinc-400 block font-semibold">
+                  <label className="text-[11px] font-inter text-zinc-400 block font-semibold">
                     Número / clave de planta *
                   </label>
                   <input
@@ -813,12 +813,12 @@ export const PlantsPage = () => {
                     placeholder="Ej. Planta 01 / Nave Norte"
                     value={plantForm.numero_planta}
                     onChange={(e) => setPlantForm({ ...plantForm, numero_planta: e.target.value })}
-                    className="w-full h-10 sm:h-9 px-3 bg-zinc-950/70 border border-zinc-800 rounded-xl text-sm sm:text-xs text-zinc-200 font-mono placeholder-zinc-600 focus:border-amber-400 outline-none transition-colors"
+                    className="w-full h-10 sm:h-9 px-3 bg-zinc-950/70 border border-zinc-800 rounded-xl text-sm sm:text-xs text-zinc-200 font-inter placeholder-zinc-600 focus:border-amber-400 outline-none transition-colors"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[11px] font-mono text-zinc-400 block font-semibold">
+                  <label className="text-[11px] font-inter text-zinc-400 block font-semibold">
                     Ubicación física *
                   </label>
                   <textarea
@@ -873,7 +873,7 @@ export const PlantsPage = () => {
             >
               <div className="flex items-start justify-between border-b border-zinc-800/80 pb-3">
                 <div>
-                  <span className="text-amber-400 font-mono text-xs font-bold">
+                  <span className="text-amber-400 font-inter text-xs font-bold">
                     Planta {selectedPlantDetail.numero_planta}
                   </span>
                   <h3 className="text-base sm:text-lg font-bold text-white tracking-tight mt-0.5 font-heading">
@@ -892,13 +892,13 @@ export const PlantsPage = () => {
               </div>
 
               {isLoadingDetail ? (
-                <div className="py-4 text-center text-xs font-mono text-zinc-500">
+                <div className="py-4 text-center text-xs font-inter text-zinc-500">
                   Actualizando información...
                 </div>
               ) : (
                 <div className="space-y-3 bg-zinc-950/60 border border-zinc-800 rounded-xl p-4 text-xs">
                   <div>
-                    <span className="text-[10px] font-mono text-zinc-500 block">
+                    <span className="text-[10px] font-inter text-zinc-500 block">
                       Ubicación operativa
                     </span>
                     <p className="text-zinc-100 mt-1 flex items-start gap-1.5 leading-relaxed">
@@ -907,7 +907,7 @@ export const PlantsPage = () => {
                     </p>
                   </div>
 
-                  <div className="pt-2 border-t border-zinc-800/70 flex items-center justify-between font-mono text-[11px] text-zinc-400">
+                  <div className="pt-2 border-t border-zinc-800/70 flex items-center justify-between font-inter text-[11px] text-zinc-400">
                     <span className="text-emerald-400">Sucursal activa</span>
                     <span>
                       Alta:{' '}

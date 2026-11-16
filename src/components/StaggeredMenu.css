@@ -143,7 +143,7 @@
   overflow: hidden;
   white-space: nowrap;
   font-size: 0.75rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: 'Poppins', sans-serif;
   letter-spacing: 0.02em;
   width: var(--sm-toggle-width, auto);
   min-width: var(--sm-toggle-width, auto);
@@ -311,7 +311,7 @@
   top: 0.15em;
   right: 0.5em;
   font-size: 0.875rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: 'Inter', sans-serif;
   font-weight: 500;
   color: var(--sm-accent, #eab308);
   letter-spacing: 0;
@@ -334,7 +334,7 @@
   margin: 0;
   font-size: 0.75rem;
   font-weight: 600;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: 'Poppins', sans-serif;
   letter-spacing: 0.04em;
   color: var(--sm-accent, #eab308);
 }

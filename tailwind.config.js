@@ -18,10 +18,12 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
+        sans: ["Inter", "sans-serif"],
         inter: ["Inter", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],
         heading: ["Poppins", "sans-serif"],
+        mono: ["Inter", "sans-serif"],
+        serif: ["Poppins", "sans-serif"],
       },
       colors: {
         // Paleta Corporativa Industrial MTS

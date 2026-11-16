@@ -38,7 +38,7 @@ import {
 
 export const UsersPage = () => {
   const navigate = useNavigate();
-  const { user, token, login } = useAuth();
+  const { user, updateUser } = useAuth();
 
   const [profile, setProfile] = useState(user || null);
   const [isLoadingProfile, setIsLoadingProfile] = useState(true);
@@ -107,9 +107,7 @@ export const UsersPage = () => {
       const res = await apiClient.get('/usuarios/me');
       if (res.data) {
         setProfile(res.data);
-        if (token) {
-          login(token, res.data);
-        }
+        updateUser(res.data);
       }
       return res.data;
     } catch (err) {
@@ -516,7 +514,7 @@ export const UsersPage = () => {
                     {profile?.nombre || 'Operador Autenticado'}
                   </h2>
                   <span
-                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold border ${
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-inter font-bold border ${
                       isAdmin
                         ? 'bg-amber-400/15 text-amber-300 border-amber-400/30'
                         : 'bg-[#6366F1]/15 text-[#818CF8] border-[#6366F1]/30'
@@ -524,12 +522,12 @@ export const UsersPage = () => {
                   >
                     {isAdmin ? 'Administrador' : 'Empleado'}
                   </span>
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-inter bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                     {profile?.estado || 'activo'}
                   </span>
                 </div>
-                <div className="flex flex-wrap items-center gap-3 text-xs text-zinc-400 font-mono">
+                <div className="flex flex-wrap items-center gap-3 text-xs text-zinc-400 font-inter">
                   <span className="inline-flex items-center gap-1.5">
                     <Mail className="w-3.5 h-3.5 text-zinc-500" />
                     {profile?.correo || '—'}
@@ -551,7 +549,7 @@ export const UsersPage = () => {
             }
           }}
           disabled={isLoadingProfile}
-          className="h-9 px-3.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white rounded-xl text-xs font-mono flex items-center justify-center gap-1.5 transition-colors cursor-pointer shrink-0"
+          className="h-9 px-3.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white rounded-xl text-xs font-inter flex items-center justify-center gap-1.5 transition-colors cursor-pointer shrink-0"
         >
           <RotateCcw className={`w-3.5 h-3.5 ${isLoadingProfile ? 'animate-spin' : ''}`} />
           <span>Sincronizar</span>
@@ -573,7 +571,7 @@ export const UsersPage = () => {
                 Proyectos autorizados en los que puedes registrar gastos operativos.
               </p>
             </div>
-            <span className="px-3 py-1 rounded-full bg-indigo-500/15 border border-indigo-500/30 text-xs font-mono text-indigo-300">
+            <span className="px-3 py-1 rounded-full bg-indigo-500/15 border border-indigo-500/30 text-xs font-inter text-indigo-300">
               {assignedProjectsForMe.length} asignados
             </span>
           </div>
@@ -602,10 +600,10 @@ export const UsersPage = () => {
                 >
                   <div>
                     <div className="flex items-center justify-between gap-2">
-                      <span className="px-2 py-0.5 rounded-md bg-zinc-800 text-amber-400 border border-zinc-700 text-xs font-mono font-bold">
+                      <span className="px-2 py-0.5 rounded-md bg-zinc-800 text-amber-400 border border-zinc-700 text-xs font-inter font-bold">
                         {proj.numero_presupuesto}
                       </span>
-                      <span className="text-[10px] font-mono text-zinc-400">
+                      <span className="text-[10px] font-inter text-zinc-400">
                         {proj.estado}
                       </span>
                     </div>
@@ -613,7 +611,7 @@ export const UsersPage = () => {
                       {proj.nombre_proyecto}
                     </p>
                   </div>
-                  <div className="pt-2.5 border-t border-zinc-800/70 flex items-center justify-between text-xs font-mono text-zinc-300">
+                  <div className="pt-2.5 border-t border-zinc-800/70 flex items-center justify-between text-xs font-inter text-zinc-300">
                     <span>Registrar gastos en este proyecto</span>
                     <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400" />
                   </div>
@@ -720,7 +718,7 @@ export const UsersPage = () => {
                   <button
                     type="button"
                     onClick={fetchAdminUsersAndQuotes}
-                    className="px-3 py-1.5 bg-red-900/40 hover:bg-red-900/60 text-white rounded-lg font-mono"
+                    className="px-3 py-1.5 bg-red-900/40 hover:bg-red-900/60 text-white rounded-lg font-inter"
                   >
                     Reintentar
                   </button>
@@ -752,19 +750,19 @@ export const UsersPage = () => {
                                   {u.nombre}
                                 </h3>
                                 {isSelf && (
-                                  <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300 border border-zinc-700 text-[10px] font-mono">
+                                  <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300 border border-zinc-700 text-[10px] font-inter">
                                     Tú
                                   </span>
                                 )}
                               </div>
-                              <p className="text-xs font-mono text-zinc-400 truncate mt-0.5">
+                              <p className="text-xs font-inter text-zinc-400 truncate mt-0.5">
                                 {u.correo}
                               </p>
                             </div>
 
                             <div className="flex flex-col items-end gap-1 shrink-0">
                               <span
-                                className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-bold border ${
+                                className={`px-2 py-0.5 rounded-full text-[10px] font-inter font-bold border ${
                                   isUserAdmin
                                     ? 'bg-amber-400/10 text-amber-300 border-amber-400/25'
                                     : 'bg-zinc-800 text-zinc-300 border-zinc-700'
@@ -773,7 +771,7 @@ export const UsersPage = () => {
                                 {isUserAdmin ? 'Admin' : 'Empleado'}
                               </span>
                               <span
-                                className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono border ${
+                                className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-inter border ${
                                   isUserActive
                                     ? 'bg-zinc-900 text-zinc-300 border-zinc-800'
                                     : 'bg-rose-950/20 text-rose-300 border-rose-900/40'
@@ -791,7 +789,7 @@ export const UsersPage = () => {
 
                           {/* Proyectos asignados */}
                           <div className="p-3 rounded-xl bg-zinc-950/80 border border-zinc-800/80 space-y-2">
-                            <div className="flex items-center justify-between text-[11px] font-mono">
+                            <div className="flex items-center justify-between text-[11px] font-inter">
                               <span className="text-zinc-400 flex items-center gap-1.5">
                                 <Briefcase className="w-3.5 h-3.5 text-zinc-400" />
                                 <span>Proyectos Asignados</span>
@@ -815,7 +813,7 @@ export const UsersPage = () => {
                                   <span
                                     key={p.id}
                                     title={p.nombre_proyecto}
-                                    className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-zinc-900 text-zinc-200 border border-zinc-800 text-[11px] font-mono max-w-full truncate"
+                                    className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-zinc-900 text-zinc-200 border border-zinc-800 text-[11px] font-inter max-w-full truncate"
                                   >
                                     <span className="font-semibold text-amber-400">{p.numero_presupuesto}</span>
                                     <span className="text-zinc-400 truncate max-w-[120px]">
@@ -844,7 +842,7 @@ export const UsersPage = () => {
                               <button
                                 type="button"
                                 onClick={() => handleToggleUserRole(u)}
-                                className="h-8 px-2.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 text-[11px] font-mono transition-colors cursor-pointer"
+                                className="h-8 px-2.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 text-[11px] font-inter transition-colors cursor-pointer"
                                 title="Cambiar rol entre Administrador y Empleado"
                               >
                                 {isUserAdmin ? 'Hacer Empleado' : 'Hacer Admin'}
@@ -852,7 +850,7 @@ export const UsersPage = () => {
                               <button
                                 type="button"
                                 onClick={() => handleToggleUserStatus(u)}
-                                className={`h-8 px-2.5 rounded-lg border text-[11px] font-mono flex items-center gap-1 transition-colors cursor-pointer ${
+                                className={`h-8 px-2.5 rounded-lg border text-[11px] font-inter flex items-center gap-1 transition-colors cursor-pointer ${
                                   isUserActive
                                     ? 'bg-rose-950/25 hover:bg-rose-950/50 border-rose-900/40 text-rose-300'
                                     : 'bg-emerald-950/25 hover:bg-emerald-950/50 border-emerald-900/40 text-emerald-300'
@@ -941,7 +939,7 @@ export const UsersPage = () => {
                 </div>
               </div>
 
-              <div className="flex flex-wrap items-center justify-between gap-2.5 text-xs font-mono">
+              <div className="flex flex-wrap items-center justify-between gap-2.5 text-xs font-inter">
                 <div className="flex items-center gap-2">
                   <div className="hidden sm:flex items-center gap-1.5 text-zinc-500 text-[11px] font-semibold">
                     <Filter className="w-3.5 h-3.5 text-amber-400" />
@@ -1002,7 +1000,7 @@ export const UsersPage = () => {
                   <div className="overflow-x-auto">
                     <table className="w-full text-left text-xs font-sans">
                       <thead>
-                        <tr className="border-b border-zinc-800 bg-zinc-900/80 text-zinc-400 font-mono text-[11px]">
+                        <tr className="border-b border-zinc-800 bg-zinc-900/80 text-zinc-400 font-inter text-[11px]">
                           <th className="py-3 px-4">Código</th>
                           <th className="py-3 px-4">Rol Asignado</th>
                           <th className="py-3 px-4">Estado</th>
@@ -1011,7 +1009,7 @@ export const UsersPage = () => {
                           <th className="py-3 px-4 text-right">Acciones</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-zinc-800/60 font-mono">
+                      <tbody className="divide-y divide-zinc-800/60 font-inter">
                         {filteredCodes.map((c) => {
                           const st = getCodeStatus(c);
                           const StatusIcon = st.icon;
@@ -1072,11 +1070,11 @@ export const UsersPage = () => {
                       >
                         <div>
                           <div className="flex items-center justify-between gap-2 mb-3">
-                            <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md bg-zinc-800 text-zinc-300 border border-zinc-700">
+                            <span className="text-[10px] font-inter font-bold px-2 py-0.5 rounded-md bg-zinc-800 text-zinc-300 border border-zinc-700">
                               Rol: {c.rol_asignado}
                             </span>
                             <span
-                              className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-medium border ${st.badgeClass}`}
+                              className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-inter font-medium border ${st.badgeClass}`}
                             >
                               <StatusIcon className="w-3 h-3" />
                               {st.label}
@@ -1084,12 +1082,12 @@ export const UsersPage = () => {
                           </div>
 
                           <div className="p-3 bg-zinc-950 border border-zinc-800/90 rounded-xl text-center">
-                            <p className="font-mono text-sm sm:text-base font-bold text-amber-400 tracking-wider select-all break-all">
+                            <p className="font-inter text-sm sm:text-base font-bold text-amber-400 tracking-wider select-all break-all">
                               {c.codigo}
                             </p>
                           </div>
 
-                          <div className="mt-3 space-y-1 text-xs font-mono text-zinc-400">
+                          <div className="mt-3 space-y-1 text-xs font-inter text-zinc-400">
                             <div className="flex justify-between">
                               <span className="text-zinc-500">Expira:</span>
                               <span>
@@ -1110,18 +1108,18 @@ export const UsersPage = () => {
                         </div>
 
                         <div className="mt-4 pt-3 border-t border-zinc-800/60 flex items-center justify-between">
-                          <span className="font-mono text-[10px] text-zinc-500">Uso único</span>
+                          <span className="font-inter text-[10px] text-zinc-500">Uso único</span>
                           {!c.usado ? (
                             <button
                               type="button"
                               onClick={() => handleRevokeCode(c)}
-                              className="h-8 px-3 rounded-lg border border-rose-900/40 bg-rose-950/20 hover:bg-rose-950/40 text-rose-400 text-xs font-mono flex items-center gap-1.5 transition-colors cursor-pointer"
+                              className="h-8 px-3 rounded-lg border border-rose-900/40 bg-rose-950/20 hover:bg-rose-950/40 text-rose-400 text-xs font-inter flex items-center gap-1.5 transition-colors cursor-pointer"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
                               <span>Revocar</span>
                             </button>
                           ) : (
-                            <span className="text-[11px] font-mono text-[#818CF8]">Canjeado</span>
+                            <span className="text-[11px] font-inter text-[#818CF8]">Canjeado</span>
                           )}
                         </div>
                       </div>
@@ -1136,7 +1134,7 @@ export const UsersPage = () => {
                     type="button"
                     onClick={loadMoreCodes}
                     disabled={isLoadingMore}
-                    className="px-5 py-2.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 rounded-xl text-xs font-mono flex items-center gap-2 cursor-pointer"
+                    className="px-5 py-2.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 rounded-xl text-xs font-inter flex items-center gap-2 cursor-pointer"
                   >
                     {isLoadingMore ? (
                       <>
@@ -1201,7 +1199,7 @@ export const UsersPage = () => {
                 <button
                   type="button"
                   onClick={() => setSelectedQuoteIds([])}
-                  className="px-2.5 py-2 rounded-xl bg-zinc-950 border border-zinc-800 text-[11px] font-mono text-zinc-400 hover:text-white cursor-pointer"
+                  className="px-2.5 py-2 rounded-xl bg-zinc-950 border border-zinc-800 text-[11px] font-inter text-zinc-400 hover:text-white cursor-pointer"
                 >
                   Limpiar ({selectedQuoteIds.length})
                 </button>
@@ -1209,7 +1207,7 @@ export const UsersPage = () => {
 
               <div className="max-h-72 overflow-y-auto space-y-1.5 pr-1">
                 {filteredModalQuotes.length === 0 ? (
-                  <p className="text-xs text-zinc-500 text-center py-8 font-mono">
+                  <p className="text-xs text-zinc-500 text-center py-8 font-inter">
                     No hay proyectos activos disponibles.
                   </p>
                 ) : (
@@ -1233,10 +1231,10 @@ export const UsersPage = () => {
                         )}
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center justify-between gap-2">
-                            <span className="text-xs font-mono font-bold text-indigo-300">
+                            <span className="text-xs font-inter font-bold text-indigo-300">
                               {q.numero_presupuesto}
                             </span>
-                            <span className="text-[10px] font-mono text-zinc-400">
+                            <span className="text-[10px] font-inter text-zinc-400">
                               {q.estado}
                             </span>
                           </div>
@@ -1315,7 +1313,7 @@ export const UsersPage = () => {
 
               <div className="space-y-4">
                 <div className="space-y-1.5">
-                  <label className="text-[11px] font-mono text-zinc-400 block font-semibold">
+                  <label className="text-[11px] font-inter text-zinc-400 block font-semibold">
                     Rol asignado *
                   </label>
                   <div className="grid grid-cols-2 gap-2">
@@ -1335,7 +1333,7 @@ export const UsersPage = () => {
                               : 'bg-zinc-950/70 border-zinc-800 text-zinc-400 hover:border-zinc-700'
                           }`}
                         >
-                          <p className="text-xs font-mono font-bold text-amber-400">{opt.label}</p>
+                          <p className="text-xs font-inter font-bold text-amber-400">{opt.label}</p>
                           <p className="text-[11px] text-zinc-400 mt-0.5">{opt.desc}</p>
                         </button>
                       );
@@ -1344,7 +1342,7 @@ export const UsersPage = () => {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-[11px] font-mono text-zinc-400 block font-semibold">
+                  <label className="text-[11px] font-inter text-zinc-400 block font-semibold">
                     Vigencia en días (1 - 365) *
                   </label>
                   <div className="flex items-center gap-2">
@@ -1355,7 +1353,7 @@ export const UsersPage = () => {
                       required
                       value={codeForm.dias_vigencia}
                       onChange={(e) => setCodeForm({ ...codeForm, dias_vigencia: e.target.value })}
-                      className="w-24 h-10 sm:h-9 px-3 bg-zinc-950/70 border border-zinc-800 rounded-xl text-sm sm:text-xs text-zinc-200 font-mono focus:border-amber-400 outline-none"
+                      className="w-24 h-10 sm:h-9 px-3 bg-zinc-950/70 border border-zinc-800 rounded-xl text-sm sm:text-xs text-zinc-200 font-inter focus:border-amber-400 outline-none"
                     />
                     <div className="flex items-center gap-1.5 flex-wrap">
                       {[7, 15, 30, 90].map((d) => (
@@ -1363,7 +1361,7 @@ export const UsersPage = () => {
                           key={d}
                           type="button"
                           onClick={() => setCodeForm({ ...codeForm, dias_vigencia: d })}
-                          className={`px-2.5 py-1.5 rounded-lg text-xs font-mono border transition-colors cursor-pointer ${
+                          className={`px-2.5 py-1.5 rounded-lg text-xs font-inter border transition-colors cursor-pointer ${
                             Number(codeForm.dias_vigencia) === d
                               ? 'bg-zinc-800 text-amber-400 border-zinc-600 font-bold'
                               : 'bg-zinc-950 text-zinc-400 border-zinc-800 hover:border-zinc-700'
@@ -1377,7 +1375,7 @@ export const UsersPage = () => {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-[11px] font-mono text-zinc-400 block font-semibold">
+                  <label className="text-[11px] font-inter text-zinc-400 block font-semibold">
                     Código personalizado (opcional)
                   </label>
                   <input
@@ -1391,7 +1389,7 @@ export const UsersPage = () => {
                       })
                     }
                     placeholder="Dejar vacío para generar aleatorio seguro"
-                    className="w-full h-10 sm:h-9 px-3 bg-zinc-950/70 border border-zinc-800 rounded-xl text-sm sm:text-xs text-zinc-200 font-mono placeholder-zinc-600 focus:border-amber-400 outline-none"
+                    className="w-full h-10 sm:h-9 px-3 bg-zinc-950/70 border border-zinc-800 rounded-xl text-sm sm:text-xs text-zinc-200 font-inter placeholder-zinc-600 focus:border-amber-400 outline-none"
                   />
                 </div>
               </div>

@@ -313,7 +313,7 @@ export const DashboardPage = () => {
     const s = (estado || 'borrador').toLowerCase();
     if (s === 'pagada') {
       return (
-        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-emerald-950/40 text-emerald-400 border border-emerald-800/40">
+        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-inter font-medium bg-emerald-950/40 text-emerald-400 border border-emerald-800/40">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
           <span>Pagada</span>
         </span>
@@ -321,7 +321,7 @@ export const DashboardPage = () => {
     }
     if (s === 'aceptada') {
       return (
-        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-amber-950/40 text-amber-400 border border-amber-800/40">
+        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-inter font-medium bg-amber-950/40 text-amber-400 border border-amber-800/40">
           <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
           <span>Aceptada</span>
         </span>
@@ -329,7 +329,7 @@ export const DashboardPage = () => {
     }
     if (s === 'enviada') {
       return (
-        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-zinc-800/70 text-zinc-300 border border-zinc-700/60">
+        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-inter font-medium bg-zinc-800/70 text-zinc-300 border border-zinc-700/60">
           <span className="w-1.5 h-1.5 rounded-full bg-zinc-400" />
           <span>Enviada</span>
         </span>
@@ -337,14 +337,14 @@ export const DashboardPage = () => {
     }
     if (s === 'cancelada') {
       return (
-        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-rose-950/30 text-rose-400 border border-rose-900/40">
+        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-inter font-medium bg-rose-950/30 text-rose-400 border border-rose-900/40">
           <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
           <span>Cancelada</span>
         </span>
       );
     }
     return (
-      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-zinc-900 text-zinc-400 border border-zinc-800">
+      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-inter font-medium bg-zinc-900 text-zinc-400 border border-zinc-800">
         <span className="w-1.5 h-1.5 rounded-full bg-zinc-500" />
         <span>Borrador</span>
       </span>
@@ -367,7 +367,7 @@ export const DashboardPage = () => {
         content: (
           <div className="flex flex-col justify-between h-full gap-3">
             <div className="flex items-center justify-between gap-2">
-              <span className="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg text-[11px] font-mono bg-amber-400/10 text-amber-400 border border-amber-400/20">
+              <span className="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg text-[11px] font-inter bg-amber-400/10 text-amber-400 border border-amber-400/20">
                 <TrendingUp className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                 <span className="hidden sm:inline">
                   Ingreso · Cotizaciones pagadas {activeMonthName ? `(${activeMonthName})` : ''}
@@ -376,14 +376,14 @@ export const DashboardPage = () => {
                   Ingreso {activeMonthName ? `(${activeMonthName})` : '(pagadas)'}
                 </span>
               </span>
-              <span className="px-2.5 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300 flex items-center gap-1">
+              <span className="px-2.5 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-inter text-zinc-300 flex items-center gap-1">
                 <span>{finanzas.conteoPagadas} pagadas</span>
                 <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400" />
               </span>
             </div>
 
             <div className="flex-1 flex flex-col items-center justify-center text-center my-auto py-1">
-              <p className="text-3xl sm:text-4xl font-mono font-bold text-white tracking-tight">
+              <p className="text-3xl sm:text-4xl font-inter font-bold text-white tracking-tight">
                 {formatCurrency(finanzas.ingreso)}
               </p>
               <p className="text-xs text-zinc-400 mt-1 max-w-sm">
@@ -405,7 +405,7 @@ export const DashboardPage = () => {
         content: (
           <div className="flex flex-col justify-between h-full gap-3">
             <div className="flex items-center justify-between gap-2">
-              <span className="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg text-[11px] font-mono bg-amber-400/10 text-amber-400 border border-amber-400/20">
+              <span className="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg text-[11px] font-inter bg-amber-400/10 text-amber-400 border border-amber-400/20">
                 <Clock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                 <span className="hidden sm:inline">
                   Gasto pendiente · Aceptadas {activeMonthName ? `(${activeMonthName})` : ''}
@@ -414,14 +414,14 @@ export const DashboardPage = () => {
                   Gasto pendiente {activeMonthName ? `(${activeMonthName})` : ''}
                 </span>
               </span>
-              <span className="px-2.5 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300 flex items-center gap-1">
+              <span className="px-2.5 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-inter text-zinc-300 flex items-center gap-1">
                 <span>{finanzas.conteoAceptadas} aceptadas</span>
                 <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400" />
               </span>
             </div>
 
             <div className="flex-1 flex flex-col items-center justify-center text-center my-auto py-1">
-              <p className="text-3xl sm:text-4xl font-mono font-bold text-white tracking-tight">
+              <p className="text-3xl sm:text-4xl font-inter font-bold text-white tracking-tight">
                 {formatCurrency(finanzas.gastoPendiente)}
               </p>
               <p className="text-xs text-zinc-400 mt-1 max-w-sm">
@@ -431,14 +431,14 @@ export const DashboardPage = () => {
 
             <div className="grid grid-cols-2 gap-2 pt-1">
               <div className="px-2.5 py-1.5 rounded-lg bg-zinc-900/80 border border-zinc-800 flex items-center justify-between gap-2">
-                <span className="text-[11px] font-mono text-zinc-400 truncate">Enviadas</span>
-                <span className="text-[11px] font-mono font-semibold text-zinc-200 shrink-0">
+                <span className="text-[11px] font-inter text-zinc-400 truncate">Enviadas</span>
+                <span className="text-[11px] font-inter font-semibold text-zinc-200 shrink-0">
                   {finanzas.conteoEnviadas} cot.
                 </span>
               </div>
               <div className="px-2.5 py-1.5 rounded-lg bg-zinc-900/80 border border-zinc-800 flex items-center justify-between gap-2">
-                <span className="text-[11px] font-mono text-zinc-400 truncate">Borradores</span>
-                <span className="text-[11px] font-mono font-semibold text-zinc-200 shrink-0">
+                <span className="text-[11px] font-inter text-zinc-400 truncate">Borradores</span>
+                <span className="text-[11px] font-inter font-semibold text-zinc-200 shrink-0">
                   {finanzas.conteoBorrador} cot.
                 </span>
               </div>
@@ -466,14 +466,14 @@ export const DashboardPage = () => {
                   <h3 className="text-sm font-heading font-semibold text-white truncate">
                     Pulso Comercial · Cotizaciones
                   </h3>
-                  <p className="text-[11px] font-mono text-zinc-400 truncate">
+                  <p className="text-[11px] font-inter text-zinc-400 truncate">
                     {activeMonthName
                       ? `Presupuestos registrados en ${activeMonthName} ${selectedYear}`
                       : 'Seguimiento de presupuestos y proyectos'}
                   </p>
                 </div>
               </div>
-              <span className="px-2.5 py-1 rounded-lg bg-zinc-800/60 border border-zinc-700/60 text-xs font-mono text-zinc-300 flex items-center gap-1 shrink-0 hover:text-white transition-colors">
+              <span className="px-2.5 py-1 rounded-lg bg-zinc-800/60 border border-zinc-700/60 text-xs font-inter text-zinc-300 flex items-center gap-1 shrink-0 hover:text-white transition-colors">
                 <span>Explorar</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </span>
@@ -481,7 +481,7 @@ export const DashboardPage = () => {
 
             {recentQuotes.length === 0 ? (
               <div className="flex-1 flex flex-col items-center justify-center text-center py-6">
-                <p className="text-xs font-mono text-zinc-500">Sin cotizaciones registradas aún.</p>
+                <p className="text-xs font-inter text-zinc-500">Sin cotizaciones registradas aún.</p>
               </div>
             ) : (
               <div className="flex-1 flex flex-col justify-between divide-y divide-zinc-800/60 overflow-hidden">
@@ -495,7 +495,7 @@ export const DashboardPage = () => {
                     >
                       <div className="min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300 border border-zinc-700/70 text-[11px] font-mono font-semibold">
+                          <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300 border border-zinc-700/70 text-[11px] font-inter font-semibold">
                             {q.numero_presupuesto}
                           </span>
                           {getVibrantQuoteBadge(q.estado)}
@@ -505,7 +505,7 @@ export const DashboardPage = () => {
                         </p>
                       </div>
                       <span
-                        className={`text-xs sm:text-sm font-mono font-semibold shrink-0 ${
+                        className={`text-xs sm:text-sm font-inter font-semibold shrink-0 ${
                           isCancelled ? 'text-zinc-600 line-through' : 'text-zinc-200'
                         }`}
                       >
@@ -517,7 +517,7 @@ export const DashboardPage = () => {
               </div>
             )}
 
-            <div className="pt-2.5 border-t border-zinc-800/80 flex items-center justify-between text-[11px] font-mono">
+            <div className="pt-2.5 border-t border-zinc-800/80 flex items-center justify-between text-[11px] font-inter">
               <span className="text-zinc-500">Volumen comprometido (Pagadas + Aceptadas)</span>
               <span className="text-zinc-200 font-bold">
                 {formatCurrency(finanzas.baseComprometida)}
@@ -546,7 +546,7 @@ export const DashboardPage = () => {
                   <h3 className="text-sm font-heading font-semibold text-white">
                     Erogaciones Reales y Margen
                   </h3>
-                  <p className="text-[11px] font-mono text-zinc-400">
+                  <p className="text-[11px] font-inter text-zinc-400">
                     {activeMonthName
                       ? `Compras y gastos de ${activeMonthName} ${selectedYear}`
                       : 'Control de compras y gastos frente a ingresos'}
@@ -558,20 +558,20 @@ export const DashboardPage = () => {
 
             <div className="grid grid-cols-2 gap-3">
               <div className="p-2.5 rounded-xl bg-zinc-900/90 border border-zinc-800">
-                <span className="text-[10px] font-mono text-zinc-500 block">
+                <span className="text-[10px] font-inter text-zinc-500 block">
                   Gasto ejecutado
                 </span>
-                <span className="text-base sm:text-lg font-mono font-bold text-zinc-200 mt-0.5 block truncate">
+                <span className="text-base sm:text-lg font-inter font-bold text-zinc-200 mt-0.5 block truncate">
                   {formatCurrency(finanzas.gastosReales)}
                 </span>
               </div>
 
               <div className="p-2.5 rounded-xl bg-zinc-900/90 border border-zinc-800">
-                <span className="text-[10px] font-mono text-zinc-500 block">
+                <span className="text-[10px] font-inter text-zinc-500 block">
                   Margen neto actual
                 </span>
                 <span
-                  className={`text-base sm:text-lg font-mono font-bold mt-0.5 block truncate ${
+                  className={`text-base sm:text-lg font-inter font-bold mt-0.5 block truncate ${
                     finanzas.balanceNeto >= 0 ? 'text-emerald-400' : 'text-rose-400'
                   }`}
                 >
@@ -580,7 +580,7 @@ export const DashboardPage = () => {
               </div>
             </div>
 
-            <div className="flex items-center justify-between text-[11px] font-mono text-zinc-500">
+            <div className="flex items-center justify-between text-[11px] font-inter text-zinc-500">
               <span>Auditoría de compras por proyecto y partida</span>
               <span className="text-zinc-300 font-semibold hover:text-white transition-colors">Abrir Gastos →</span>
             </div>
@@ -602,7 +602,7 @@ export const DashboardPage = () => {
               <div className="w-9 h-9 rounded-xl bg-zinc-800/70 border border-zinc-700/60 flex items-center justify-center text-zinc-300">
                 <Layers className="w-4 h-4" />
               </div>
-              <span className="px-2 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-[10px] font-mono text-zinc-400">
+              <span className="px-2 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-[10px] font-inter text-zinc-400">
                 Catálogo
               </span>
             </div>
@@ -612,7 +612,7 @@ export const DashboardPage = () => {
                 Desglose técnico de alcances, volúmenes y precios unitarios.
               </p>
             </div>
-            <div className="flex items-center justify-between text-xs font-mono text-zinc-400 hover:text-amber-400 transition-colors">
+            <div className="flex items-center justify-between text-xs font-inter text-zinc-400 hover:text-amber-400 transition-colors">
               <span>Ver conceptos</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </div>
@@ -634,7 +634,7 @@ export const DashboardPage = () => {
               <div className="w-9 h-9 rounded-xl bg-zinc-800/70 border border-zinc-700/60 flex items-center justify-center text-zinc-300">
                 <Users className="w-4 h-4" />
               </div>
-              <span className="px-2 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-[10px] font-mono text-zinc-400">
+              <span className="px-2 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-[10px] font-inter text-zinc-400">
                 {recentClients.length}
                 {recentClients.length === PAGE_LIMIT ? '+' : ''} empresas
               </span>
@@ -645,7 +645,7 @@ export const DashboardPage = () => {
                 Cartera industrial, contactos ejecutivos y domicilios fiscales.
               </p>
             </div>
-            <div className="flex items-center justify-between text-xs font-mono text-zinc-400 hover:text-white transition-colors">
+            <div className="flex items-center justify-between text-xs font-inter text-zinc-400 hover:text-white transition-colors">
               <span>Directorio</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </div>
@@ -667,7 +667,7 @@ export const DashboardPage = () => {
               <div className="w-9 h-9 rounded-xl bg-zinc-800/70 border border-zinc-700/60 flex items-center justify-center text-zinc-300">
                 <Factory className="w-4 h-4" />
               </div>
-              <span className="px-2 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-[10px] font-mono text-zinc-400">
+              <span className="px-2 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-[10px] font-inter text-zinc-400">
                 {recentPlants.length}
                 {recentPlants.length === PAGE_LIMIT ? '+' : ''} sedes
               </span>
@@ -678,7 +678,7 @@ export const DashboardPage = () => {
                 Naves industriales, complejos y ubicaciones operativas.
               </p>
             </div>
-            <div className="flex items-center justify-between text-xs font-mono text-zinc-400 hover:text-white transition-colors">
+            <div className="flex items-center justify-between text-xs font-inter text-zinc-400 hover:text-white transition-colors">
               <span>Ver plantas</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </div>
@@ -700,7 +700,7 @@ export const DashboardPage = () => {
               <div className="w-9 h-9 rounded-xl bg-zinc-800/70 border border-zinc-700/60 flex items-center justify-center text-zinc-300">
                 <Building2 className="w-4 h-4" />
               </div>
-              <span className="px-2 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-[10px] font-mono text-zinc-400 truncate max-w-[110px]">
+              <span className="px-2 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-[10px] font-inter text-zinc-400 truncate max-w-[110px]">
                 {companyInfo?.ciudad || 'Membrete'}
               </span>
             </div>
@@ -710,7 +710,7 @@ export const DashboardPage = () => {
                 Identidad corporativa, teléfonos y datos para PDFs.
               </p>
             </div>
-            <div className="flex items-center justify-between text-xs font-mono text-zinc-400 hover:text-amber-400 transition-colors">
+            <div className="flex items-center justify-between text-xs font-inter text-zinc-400 hover:text-amber-400 transition-colors">
               <span>Configurar</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </div>
@@ -732,7 +732,7 @@ export const DashboardPage = () => {
               <div className="w-9 h-9 rounded-xl bg-zinc-800/70 border border-zinc-700/60 flex items-center justify-center text-zinc-300">
                 <KeyRound className="w-4 h-4" />
               </div>
-              <span className="px-2 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-[10px] font-mono text-zinc-400">
+              <span className="px-2 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-[10px] font-inter text-zinc-400">
                 {usersCount || 1} usuarios
               </span>
             </div>
@@ -742,7 +742,7 @@ export const DashboardPage = () => {
                 Asignación de proyectos a operadores e invitaciones seguras.
               </p>
             </div>
-            <div className="flex items-center justify-between text-xs font-mono text-zinc-400 hover:text-white transition-colors">
+            <div className="flex items-center justify-between text-xs font-inter text-zinc-400 hover:text-white transition-colors">
               <span>Gestionar</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </div>
@@ -768,7 +768,7 @@ export const DashboardPage = () => {
                   <AlertCircle className="w-4 h-4 text-amber-400" />
                 )}
               </div>
-              <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-[10px] font-mono text-zinc-400">
+              <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-[10px] font-inter text-zinc-400">
                 <span
                   className={`w-1.5 h-1.5 rounded-full ${
                     isHealthy ? 'bg-emerald-400' : 'bg-amber-400'
@@ -781,11 +781,11 @@ export const DashboardPage = () => {
               <h3 className="text-base font-heading font-semibold text-white">
                 {health?.app || 'MTS API'}
               </h3>
-              <p className="text-xs text-zinc-500 mt-1 font-mono">
+              <p className="text-xs text-zinc-500 mt-1 font-inter">
                 {isHealthy ? 'Sesión única y CORS activos' : 'Verificando enlace...'}
               </p>
             </div>
-            <div className="flex items-center justify-between text-xs font-mono text-zinc-400 hover:text-white transition-colors">
+            <div className="flex items-center justify-between text-xs font-inter text-zinc-400 hover:text-white transition-colors">
               <span>Sincronizar</span>
               <RotateCcw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
             </div>
@@ -834,16 +834,16 @@ export const DashboardPage = () => {
         content: (
           <div className="flex flex-col justify-between h-full gap-3">
             <div className="flex items-center justify-between">
-              <span className="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg text-[11px] font-mono bg-zinc-800 text-zinc-300 border border-zinc-700/70">
+              <span className="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg text-[11px] font-inter bg-zinc-800 text-zinc-300 border border-zinc-700/70">
                 <Briefcase className="w-3.5 h-3.5 text-zinc-400" />
                 <span>Mis proyectos asignados</span>
               </span>
-              <span className="px-2.5 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-400">
+              <span className="px-2.5 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-inter text-zinc-400">
                 Operador Activo
               </span>
             </div>
             <div>
-              <p className="text-3xl font-mono font-bold text-white">
+              <p className="text-3xl font-inter font-bold text-white">
                 {employeeStats.assignedCount}{' '}
                 <span className="text-base font-normal text-zinc-400">
                   {employeeStats.assignedCount === 1 ? 'proyecto habilitado' : 'proyectos habilitados'}
@@ -853,7 +853,7 @@ export const DashboardPage = () => {
                 Consulta y registro de gastos exclusivo para tus proyectos autorizados.
               </p>
             </div>
-            <div className="flex items-center justify-between text-xs font-mono text-zinc-400 hover:text-white transition-colors">
+            <div className="flex items-center justify-between text-xs font-inter text-zinc-400 hover:text-white transition-colors">
               <span>Ir al módulo de gastos</span>
               <ArrowUpRight className="w-4 h-4" />
             </div>
@@ -870,23 +870,23 @@ export const DashboardPage = () => {
         content: (
           <div className="flex flex-col justify-between h-full gap-3">
             <div className="flex items-center justify-between">
-              <span className="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg text-[11px] font-mono bg-zinc-800 text-zinc-300 border border-zinc-700/70">
+              <span className="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg text-[11px] font-inter bg-zinc-800 text-zinc-300 border border-zinc-700/70">
                 <Wallet className="w-3.5 h-3.5 text-zinc-400" />
                 <span>Gastos registrados</span>
               </span>
-              <span className="px-2.5 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-400">
+              <span className="px-2.5 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-inter text-zinc-400">
                 {employeeStats.expensesCount} mov.
               </span>
             </div>
             <div>
-              <p className="text-3xl font-mono font-bold text-white">
+              <p className="text-3xl font-inter font-bold text-white">
                 {formatCurrency(employeeStats.totalSpent)}
               </p>
               <p className="text-xs text-zinc-400 mt-1">
                 Acumulado reciente en tus proyectos asignados.
               </p>
             </div>
-            <div className="flex items-center justify-between text-xs font-mono text-zinc-400 hover:text-amber-400 transition-colors">
+            <div className="flex items-center justify-between text-xs font-inter text-zinc-400 hover:text-amber-400 transition-colors">
               <span>Registrar nuevo gasto</span>
               <PlusCircle className="w-4 h-4" />
             </div>
@@ -911,7 +911,7 @@ export const DashboardPage = () => {
                   <h3 className="text-sm font-heading font-semibold text-white">
                     Proyectos bajo tu Operación
                   </h3>
-                  <p className="text-[11px] font-mono text-zinc-400">
+                  <p className="text-[11px] font-inter text-zinc-400">
                     Selecciona cualquiera para capturar erogaciones
                   </p>
                 </div>
@@ -940,7 +940,7 @@ export const DashboardPage = () => {
                   >
                     <div className="min-w-0">
                       <div className="flex items-center gap-2">
-                        <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300 border border-zinc-700/70 text-[11px] font-mono font-semibold">
+                        <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300 border border-zinc-700/70 text-[11px] font-inter font-semibold">
                           {q.numero_presupuesto}
                         </span>
                         {getVibrantQuoteBadge(q.estado)}
@@ -949,7 +949,7 @@ export const DashboardPage = () => {
                         {q.nombre_proyecto}
                       </p>
                     </div>
-                    <span className="text-[11px] font-mono text-zinc-400 hover:text-white shrink-0 flex items-center gap-1">
+                    <span className="text-[11px] font-inter text-zinc-400 hover:text-white shrink-0 flex items-center gap-1">
                       <span>+ Gasto</span>
                       <ArrowUpRight className="w-3.5 h-3.5" />
                     </span>
@@ -958,7 +958,7 @@ export const DashboardPage = () => {
               </div>
             )}
 
-            <div className="pt-2.5 border-t border-zinc-800/80 flex items-center justify-between text-[11px] font-mono text-zinc-500">
+            <div className="pt-2.5 border-t border-zinc-800/80 flex items-center justify-between text-[11px] font-inter text-zinc-500">
               <span>Acceso protegido por asignación</span>
               <span className="text-zinc-300 font-semibold hover:text-white transition-colors">Ir a Gastos →</span>
             </div>
@@ -983,7 +983,7 @@ export const DashboardPage = () => {
                   <h3 className="text-sm font-heading font-semibold text-white">
                     Bitácora Reciente de Gastos
                   </h3>
-                  <p className="text-[11px] font-mono text-zinc-400">
+                  <p className="text-[11px] font-inter text-zinc-400">
                     Movimientos capturados en tus proyectos
                   </p>
                 </div>
@@ -992,7 +992,7 @@ export const DashboardPage = () => {
 
             {recentExpenses.length === 0 ? (
               <div className="flex-1 flex flex-col items-center justify-center text-center py-6">
-                <p className="text-xs font-mono text-zinc-500">
+                <p className="text-xs font-inter text-zinc-500">
                   No hay gastos registrados todavía en tus proyectos.
                 </p>
               </div>
@@ -1005,13 +1005,13 @@ export const DashboardPage = () => {
                   >
                     <div className="min-w-0">
                       <p className="text-xs font-medium text-zinc-200 truncate">{g.descripcion}</p>
-                      <div className="flex items-center gap-2 mt-0.5 text-[11px] font-mono text-zinc-500">
+                      <div className="flex items-center gap-2 mt-0.5 text-[11px] font-inter text-zinc-500">
                         <span>{g.cotizacion_folio || 'Proyecto asignado'}</span>
                         <span>·</span>
                         <span>{formatShortDate(g.fecha_gasto)}</span>
                       </div>
                     </div>
-                    <span className="text-xs sm:text-sm font-mono font-bold text-zinc-200 shrink-0">
+                    <span className="text-xs sm:text-sm font-inter font-bold text-zinc-200 shrink-0">
                       {formatCurrency(g.monto)}
                     </span>
                   </div>
@@ -1019,7 +1019,7 @@ export const DashboardPage = () => {
               </div>
             )}
 
-            <div className="pt-2.5 border-t border-zinc-800/80 flex items-center justify-between text-[11px] font-mono text-zinc-500">
+            <div className="pt-2.5 border-t border-zinc-800/80 flex items-center justify-between text-[11px] font-inter text-zinc-500">
               <span>Ver bitácora completa</span>
               <span className="text-zinc-300 font-semibold hover:text-white transition-colors">Abrir Gastos →</span>
             </div>
@@ -1053,7 +1053,7 @@ export const DashboardPage = () => {
               type="button"
               onClick={() => fetchDashboardTelemetry(selectedMonth, selectedYear)}
               disabled={isLoading}
-              className="h-11 sm:h-9 px-3.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white rounded-xl text-xs font-mono flex items-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50"
+              className="h-11 sm:h-9 px-3.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white rounded-xl text-xs font-inter flex items-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50"
             >
               <RotateCcw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
               <span>Actualizar</span>
@@ -1084,7 +1084,7 @@ export const DashboardPage = () => {
       </div>
 
       {/* Selector de Período / Mes con GlideSelect */}
-      <div className="relative z-30 flex flex-wrap items-center justify-between gap-2.5 sm:gap-3 pb-1 text-xs font-mono">
+      <div className="relative z-30 flex flex-wrap items-center justify-between gap-2.5 sm:gap-3 pb-1 text-xs font-inter">
         <div className="flex flex-wrap items-center gap-2">
           <div className="hidden sm:flex items-center gap-1.5 text-zinc-500 text-[11px] font-semibold">
             <Calendar className="w-3.5 h-3.5 text-amber-400" />
@@ -1112,7 +1112,7 @@ export const DashboardPage = () => {
           />
         </div>
 
-        <div className="text-xs sm:text-[11px] text-zinc-400 flex items-center gap-2 font-mono">
+        <div className="text-xs sm:text-[11px] text-zinc-400 flex items-center gap-2 font-inter">
           {selectedMonth !== 'todos' ? (
             <>
               <span>

@@ -148,7 +148,7 @@ export const CompanyPage = () => {
           type="button"
           onClick={fetchCompany}
           disabled={isLoading}
-          className="h-9 px-3.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white rounded-xl text-xs font-mono flex items-center gap-1.5 transition-colors cursor-pointer shrink-0"
+          className="h-9 px-3.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white rounded-xl text-xs font-inter flex items-center gap-1.5 transition-colors cursor-pointer shrink-0"
         >
           <RotateCcw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
           <span className="hidden sm:inline">Recargar</span>
@@ -168,7 +168,7 @@ export const CompanyPage = () => {
           <button
             type="button"
             onClick={fetchCompany}
-            className="flex items-center gap-1 px-3 py-1.5 bg-red-900/40 hover:bg-red-900/60 text-white rounded-lg transition-colors font-mono"
+            className="flex items-center gap-1 px-3 py-1.5 bg-red-900/40 hover:bg-red-900/60 text-white rounded-lg transition-colors font-inter"
           >
             <RotateCcw className="w-3 h-3" />
             <span>Reintentar</span>
@@ -200,7 +200,7 @@ export const CompanyPage = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="sm:col-span-2 space-y-1">
-                <label className="text-[11px] font-mono text-zinc-400 block font-semibold">
+                <label className="text-[11px] font-inter text-zinc-400 block font-semibold">
                   Calle y número *
                 </label>
                 <input
@@ -215,7 +215,7 @@ export const CompanyPage = () => {
               </div>
 
               <div className="space-y-1">
-                <label className="text-[11px] font-mono text-zinc-400 block font-semibold">
+                <label className="text-[11px] font-inter text-zinc-400 block font-semibold">
                   Colonia / Parque industrial *
                 </label>
                 <input
@@ -230,7 +230,7 @@ export const CompanyPage = () => {
               </div>
 
               <div className="space-y-1">
-                <label className="text-[11px] font-mono text-zinc-400 block font-semibold">
+                <label className="text-[11px] font-inter text-zinc-400 block font-semibold">
                   Ciudad *
                 </label>
                 <input
@@ -245,7 +245,7 @@ export const CompanyPage = () => {
               </div>
 
               <div className="space-y-1">
-                <label className="text-[11px] font-mono text-zinc-400 block font-semibold">
+                <label className="text-[11px] font-inter text-zinc-400 block font-semibold">
                   Estado / Provincia *
                 </label>
                 <input
@@ -262,7 +262,7 @@ export const CompanyPage = () => {
               </div>
 
               <div className="space-y-1">
-                <label className="text-[11px] font-mono text-zinc-400 block font-semibold">
+                <label className="text-[11px] font-inter text-zinc-400 block font-semibold">
                   Correo corporativo *
                 </label>
                 <input
@@ -276,7 +276,7 @@ export const CompanyPage = () => {
               </div>
 
               <div className="sm:col-span-2 space-y-1">
-                <label className="text-[11px] font-mono text-zinc-400 block font-semibold">
+                <label className="text-[11px] font-inter text-zinc-400 block font-semibold">
                   Teléfonos de atención *
                 </label>
                 <div className="relative">
@@ -288,7 +288,7 @@ export const CompanyPage = () => {
                     placeholder="Ej. 618-123-4567, 618-765-4321"
                     value={companyForm.telefonos}
                     onChange={(e) => setCompanyForm({ ...companyForm, telefonos: e.target.value })}
-                    className="w-full h-10 sm:h-9 pl-9 pr-3 bg-zinc-950/70 border border-zinc-800 rounded-xl text-sm sm:text-xs text-zinc-200 font-mono focus:border-amber-400 outline-none transition-colors"
+                    className="w-full h-10 sm:h-9 pl-9 pr-3 bg-zinc-950/70 border border-zinc-800 rounded-xl text-sm sm:text-xs text-zinc-200 font-inter focus:border-amber-400 outline-none transition-colors"
                   />
                 </div>
               </div>
