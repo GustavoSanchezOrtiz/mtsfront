@@ -37,10 +37,12 @@ import {
   TrendingUp,
   Wallet,
   ArrowUpRight,
+  Copy,
 } from 'lucide-react';
 import apiClient from '../../lib/axios';
 import GlideSelect from '../../components/GlideSelect';
 import SearchableCombobox from '../../components/SearchableCombobox';
+import EmailRegistryInput from '../../components/EmailRegistryInput';
 import {
   Skeleton,
   QuotesGridSkeleton,
@@ -202,18 +204,24 @@ export const QuotesPage = () => {
   const [detailAssignedIds, setDetailAssignedIds] = useState([]);
   const [isSavingAssignments, setIsSavingAssignments] = useState(false);
 
+  // Registro de correos enviados anteriormente (sin pantalla aparte)
+  const [savedEmails, setSavedEmails] = useState([]);
+  const [isEditingDetailEmail, setIsEditingDetailEmail] = useState(false);
+  const [detailEmailValue, setDetailEmailValue] = useState('');
+  const [isSavingDetailEmail, setIsSavingDetailEmail] = useState(false);
+
   // Formulario del Presupuesto Comercial
   const initialQuoteForm = {
     numero_presupuesto: '',
     nombre_proyecto: '',
-    atencion_a: '',
+    correo_contacto: '',
     cliente_id: '',
     planta_id: '',
     moneda: 'MXN',
     porcentaje_anticipo: 50,
     tiempo_entrega: '30 días hábiles a partir de recibida la orden de compra y/o anticipo',
     vigencia_dias: 40,
-    condiciones_pago: 'Los pagos a MTS SYSTEMS se deben efectuar por medio de cheque o transferencia bancaria.',
+    condiciones_pago: 'Los pagos a MTS se deben efectuar por medio de cheque o transferencia bancaria.',
     incluye_instalacion: false,
     notas_legales:
       'Salvo fluctuación importando del Peso-Dólar. Los precios están sujetos a cambio por variación en costos de material sin previo aviso. El IVA no se incluye en la presente cotización, dicho impuesto será adicionado al momento de facturar.',
@@ -366,10 +374,61 @@ export const QuotesPage = () => {
     }
   };
 
+  const fetchSavedEmails = async () => {
+    try {
+      const response = await apiClient.get('/cotizaciones/correos-registrados?limit=200');
+      setSavedEmails(Array.isArray(response.data) ? response.data : []);
+    } catch (err) {
+      console.error('Error al cargar registro de correos:', err);
+    }
+  };
+
+  const handleSaveNewEmail = async ({ correo, nombre_contacto, cliente_id }) => {
+    try {
+      const res = await apiClient.post('/cotizaciones/correos-registrados', {
+        correo,
+        nombre_contacto: nombre_contacto || null,
+        cliente_id: cliente_id || null,
+      });
+      if (res.data) {
+        setSavedEmails((prev) => [
+          res.data,
+          ...prev.filter((item) => item.id !== res.data.id && item.correo !== res.data.correo),
+        ]);
+        showToast(`Correo ${res.data.correo} guardado en el registro.`);
+      }
+    } catch (err) {
+      console.error('Error al guardar correo:', err);
+      showToast(err.response?.data?.detail || 'No se pudo guardar el correo.');
+    }
+  };
+
+  const handleDeleteSavedEmail = async (emailId) => {
+    try {
+      await apiClient.delete(`/cotizaciones/correos-registrados/${emailId}`);
+      setSavedEmails((prev) => prev.filter((item) => item.id !== emailId));
+      showToast('Correo eliminado del registro.');
+    } catch (err) {
+      console.error('Error al eliminar correo guardado:', err);
+      showToast(err.response?.data?.detail || 'No se pudo eliminar el correo.');
+    }
+  };
+
+  const handleCopyEmail = async (email) => {
+    if (!email) return;
+    try {
+      await navigator.clipboard.writeText(email);
+      showToast('Correo copiado al portapapeles.');
+    } catch {
+      showToast('No se pudo copiar el correo.');
+    }
+  };
+
   useEffect(() => {
     fetchQuotes();
     fetchClients();
     fetchEmployeesCatalog();
+    fetchSavedEmails();
   }, []);
 
   // Al cambiar cliente_id en el formulario, cargar sus plantas
@@ -487,7 +546,8 @@ export const QuotesPage = () => {
       return (
         (q.numero_presupuesto && q.numero_presupuesto.toLowerCase().includes(term)) ||
         (q.nombre_proyecto && q.nombre_proyecto.toLowerCase().includes(term)) ||
-        (q.atencion_a && q.atencion_a.toLowerCase().includes(term))
+        (q.atencion_a && q.atencion_a.toLowerCase().includes(term)) ||
+        (q.correo_contacto && q.correo_contacto.toLowerCase().includes(term))
       );
     });
 
@@ -627,22 +687,27 @@ export const QuotesPage = () => {
       setQuoteForm({
         numero_presupuesto: fullQuote.numero_presupuesto || '',
         nombre_proyecto: fullQuote.nombre_proyecto || '',
-        atencion_a: fullQuote.atencion_a || '',
+        correo_contacto: fullQuote.correo_contacto || fullQuote.atencion_a || '',
         cliente_id: fullQuote.cliente_id ? String(fullQuote.cliente_id) : '',
         planta_id: fullQuote.planta_id ? String(fullQuote.planta_id) : '',
         moneda: fullQuote.moneda || 'MXN',
         porcentaje_anticipo:
-          fullQuote.porcentaje_anticipo !== undefined ? fullQuote.porcentaje_anticipo : 50,
+          fullQuote.porcentaje_anticipo !== undefined && fullQuote.porcentaje_anticipo !== null
+            ? Number(fullQuote.porcentaje_anticipo)
+            : 50,
         tiempo_entrega:
-          fullQuote.tiempo_entrega ||
+          fullQuote.tiempo_entrega ??
           '30 días hábiles a partir de recibida la orden de compra y/o anticipo',
-        vigencia_dias: fullQuote.vigencia_dias || 40,
+        vigencia_dias:
+          fullQuote.vigencia_dias !== undefined && fullQuote.vigencia_dias !== null
+            ? Number(fullQuote.vigencia_dias)
+            : 40,
         condiciones_pago:
-          fullQuote.condiciones_pago ||
-          'Los pagos a MTS SYSTEMS se deben efectuar por medio de cheque o transferencia bancaria.',
+          fullQuote.condiciones_pago ??
+          'Los pagos a MTS se deben efectuar por medio de cheque o transferencia bancaria.',
         incluye_instalacion: Boolean(fullQuote.incluye_instalacion),
         notas_legales:
-          fullQuote.notas_legales ||
+          fullQuote.notas_legales ??
           'Salvo fluctuación importando del Peso-Dólar. Los precios están sujetos a cambio por variación en costos de material sin previo aviso. El IVA no se incluye en la presente cotización, dicho impuesto será adicionado al momento de facturar.',
         estado: (fullQuote.estado || 'borrador').toLowerCase(),
         usuarios_asignados_ids: Array.isArray(fullQuote.usuarios_asignados_ids)
@@ -674,6 +739,8 @@ export const QuotesPage = () => {
   const handleOpenDetail = async (quote) => {
     setSelectedQuoteDetail(quote);
     setIsEditingAssignments(false);
+    setIsEditingDetailEmail(false);
+    setDetailEmailValue(quote.correo_contacto || quote.atencion_a || '');
     setDetailAssignedIds(
       Array.isArray(quote.usuarios_asignados_ids) ? quote.usuarios_asignados_ids : []
     );
@@ -686,6 +753,7 @@ export const QuotesPage = () => {
       ]);
       if (quoteRes.data) {
         setSelectedQuoteDetail(quoteRes.data);
+        setDetailEmailValue(quoteRes.data.correo_contacto || quoteRes.data.atencion_a || '');
         setDetailAssignedIds(
           Array.isArray(quoteRes.data.usuarios_asignados_ids)
             ? quoteRes.data.usuarios_asignados_ids
@@ -700,6 +768,38 @@ export const QuotesPage = () => {
       setDetailExpenses([]);
     } finally {
       setIsLoadingDetailItems(false);
+    }
+  };
+
+  /**
+   * Guardar o actualizar correo de envío desde el detalle de cotización
+   */
+  const handleSaveDetailEmail = async () => {
+    if (!selectedQuoteDetail) return;
+    const cleaned = detailEmailValue.trim().toLowerCase();
+    if (!cleaned) {
+      showToast('Ingresa un correo electrónico válido.');
+      return;
+    }
+    try {
+      setIsSavingDetailEmail(true);
+      const res = await apiClient.put(`/cotizaciones/${selectedQuoteDetail.id}`, {
+        atencion_a: cleaned,
+        correo_contacto: cleaned,
+      });
+      if (res.data) {
+        setSelectedQuoteDetail(res.data);
+        setDetailEmailValue(res.data.correo_contacto || res.data.atencion_a || '');
+        setQuotes((prev) => prev.map((q) => (q.id === res.data.id ? res.data : q)));
+      }
+      setIsEditingDetailEmail(false);
+      fetchSavedEmails();
+      showToast('Correo de atención guardado en la cotización y en el registro.');
+    } catch (err) {
+      console.error('Error al actualizar correo de contacto:', err);
+      showToast(err.response?.data?.detail || 'No se pudo guardar el correo.');
+    } finally {
+      setIsSavingDetailEmail(false);
     }
   };
 
@@ -879,8 +979,8 @@ export const QuotesPage = () => {
       setWizardError('Por favor describe el concepto o nombre del proyecto.');
       return;
     }
-    if (!quoteForm.atencion_a.trim()) {
-      setWizardError('Por favor indica a quién va dirigida la cotización (Atención a).');
+    if (!quoteForm.correo_contacto.trim()) {
+      setWizardError('Por favor selecciona o ingresa el correo de atención.');
       return;
     }
     setWizardError(null);
@@ -905,23 +1005,38 @@ export const QuotesPage = () => {
   const handleSaveQuoteSubmit = async (e) => {
     e.preventDefault();
 
+    const rawAnticipo = String(quoteForm.porcentaje_anticipo ?? '').trim();
+    const parsedAnticipo = rawAnticipo === '' ? NaN : Number(rawAnticipo);
+    if (!Number.isFinite(parsedAnticipo) || parsedAnticipo < 0 || parsedAnticipo > 100) {
+      setWizardError('El porcentaje de anticipo debe ser un valor entre 0 y 100.');
+      return;
+    }
+
+    const parsedVigencia = parseInt(String(quoteForm.vigencia_dias ?? '').trim(), 10);
+    if (!Number.isFinite(parsedVigencia) || parsedVigencia < 1 || parsedVigencia > 3650) {
+      setWizardError('La vigencia debe ser un número entero entre 1 y 3650 días.');
+      return;
+    }
+
     try {
       setIsSubmitting(true);
       setWizardError(null);
 
+      const normalizedEmail = quoteForm.correo_contacto.trim().toLowerCase();
       const quotePayload = {
         numero_presupuesto: quoteForm.numero_presupuesto.trim(),
         nombre_proyecto: quoteForm.nombre_proyecto.trim(),
-        atencion_a: quoteForm.atencion_a.trim(),
+        atencion_a: normalizedEmail,
+        correo_contacto: normalizedEmail,
         cliente_id: parseInt(quoteForm.cliente_id, 10),
-        planta_id: quoteForm.planta_id ? parseInt(quoteForm.planta_id, 10) : undefined,
-        moneda: quoteForm.moneda || 'MXN',
-        porcentaje_anticipo: parseFloat(quoteForm.porcentaje_anticipo) || 50,
-        tiempo_entrega: quoteForm.tiempo_entrega,
-        vigencia_dias: parseInt(quoteForm.vigencia_dias, 10) || 40,
-        condiciones_pago: quoteForm.condiciones_pago,
+        planta_id: quoteForm.planta_id ? parseInt(quoteForm.planta_id, 10) : null,
+        moneda: (quoteForm.moneda || 'MXN').trim(),
+        porcentaje_anticipo: Number(parsedAnticipo.toFixed(2)),
+        tiempo_entrega: (quoteForm.tiempo_entrega || '').trim(),
+        vigencia_dias: parsedVigencia,
+        condiciones_pago: (quoteForm.condiciones_pago || '').trim(),
         incluye_instalacion: Boolean(quoteForm.incluye_instalacion),
-        notas_legales: quoteForm.notas_legales,
+        notas_legales: (quoteForm.notas_legales || '').trim(),
         estado: quoteForm.estado || 'borrador',
         usuarios_asignados_ids: Array.isArray(quoteForm.usuarios_asignados_ids)
           ? quoteForm.usuarios_asignados_ids
@@ -987,6 +1102,7 @@ export const QuotesPage = () => {
       setCurrentStep(1);
       setQuoteForm(initialQuoteForm);
       fetchQuotes();
+      fetchSavedEmails();
     } catch (err) {
       console.error('Error al guardar cotización:', err);
       setWizardError(
@@ -1334,7 +1450,7 @@ export const QuotesPage = () => {
                   <th className="py-3 px-4">Presupuesto</th>
                   <th className="py-3 px-4">Proyecto</th>
                   <th className="py-3 px-4">Cliente</th>
-                  <th className="py-3 px-4">Atención a</th>
+                  <th className="py-3 px-4">Atención (Correo)</th>
                   <th className="py-3 px-4">Fecha</th>
                   <th className="py-3 px-4">Total</th>
                   <th className="py-3 px-4">Estado</th>
@@ -1369,10 +1485,15 @@ export const QuotesPage = () => {
                         )}
                       </td>
                       <td className="py-3.5 px-4 font-sans text-zinc-400 whitespace-nowrap">
-                        {quote.atencion_a ? (
-                          <span className="flex items-center gap-1.5" title={quote.atencion_a}>
-                            <User className="w-3 h-3 text-zinc-600 shrink-0" />
-                            <span className="truncate max-w-[140px] xl:max-w-[180px]">{quote.atencion_a}</span>
+                        {quote.correo_contacto || quote.atencion_a ? (
+                          <span
+                            className="flex items-center gap-1.5"
+                            title={quote.correo_contacto || quote.atencion_a}
+                          >
+                            <Mail className="w-3 h-3 text-zinc-600 shrink-0" />
+                            <span className="truncate max-w-[160px] xl:max-w-[200px]">
+                              {quote.correo_contacto || quote.atencion_a}
+                            </span>
                           </span>
                         ) : (
                           <span className="text-zinc-600">—</span>
@@ -1536,10 +1657,15 @@ export const QuotesPage = () => {
                               </span>
                             </div>
                           ) : null}
-                          {quote.atencion_a ? (
-                            <div className="hidden sm:flex items-center gap-1.5 text-zinc-500 text-[11px] truncate" title={quote.atencion_a}>
-                              <User className="w-3.5 h-3.5 text-zinc-600 shrink-0" />
-                              <span className="truncate">{quote.atencion_a}</span>
+                          {quote.correo_contacto || quote.atencion_a ? (
+                            <div
+                              className="hidden sm:flex items-center gap-1.5 text-zinc-500 text-[11px] truncate"
+                              title={quote.correo_contacto || quote.atencion_a}
+                            >
+                              <Mail className="w-3.5 h-3.5 text-zinc-600 shrink-0" />
+                              <span className="truncate">
+                                {quote.correo_contacto || quote.atencion_a}
+                              </span>
                             </div>
                           ) : null}
                           {Array.isArray(quote.usuarios_asignados) &&
@@ -1875,18 +2001,22 @@ export const QuotesPage = () => {
                         />
                       </div>
 
-                      {/* Atención a (Persona de contacto) */}
+                      {/* Atención a (Correo con registro de envíos anteriores) */}
                       <div className="space-y-1 sm:col-span-2">
                         <label className="text-[11px] font-poppins text-zinc-400 block font-semibold truncate">
-                          Atención a *
+                          Atención a (Correo) *
                         </label>
-                        <input
-                          type="text"
+                        <EmailRegistryInput
                           required
-                          placeholder="Ej. Ing. Roberto Silva"
-                          value={quoteForm.atencion_a}
-                          onChange={(e) => setQuoteForm({ ...quoteForm, atencion_a: e.target.value })}
-                          className="w-full h-9 px-3 bg-zinc-950/70 border border-zinc-800 rounded-xl text-xs text-zinc-200 placeholder-zinc-600 focus:border-amber-400 outline-none transition-colors"
+                          value={quoteForm.correo_contacto}
+                          onChange={(val) =>
+                            setQuoteForm((prev) => ({ ...prev, correo_contacto: val }))
+                          }
+                          savedEmails={savedEmails}
+                          clienteId={quoteForm.cliente_id}
+                          onSaveNew={handleSaveNewEmail}
+                          onDeleteSaved={handleDeleteSavedEmail}
+                          placeholder="Seleccionar un correo anterior o escribir uno nuevo..."
                         />
                       </div>
                     </div>
@@ -2134,8 +2264,10 @@ export const QuotesPage = () => {
                         </label>
                         <select
                           value={quoteForm.moneda}
-                          onChange={(e) => setQuoteForm({ ...quoteForm, moneda: e.target.value })}
-                          className="w-full h-8 px-2.5 bg-zinc-950/70 border border-zinc-800 rounded-lg text-xs text-zinc-200 outline-none"
+                          onChange={(e) =>
+                            setQuoteForm((prev) => ({ ...prev, moneda: e.target.value }))
+                          }
+                          className="w-full h-8 px-2.5 bg-zinc-950/70 border border-zinc-800 rounded-lg text-xs text-zinc-200 outline-none focus:border-amber-400 transition-colors"
                         >
                           <option value="MXN">MXN (Pesos Mexicanos)</option>
                           <option value="USD">USD (Dólares Americanos)</option>
@@ -2151,11 +2283,15 @@ export const QuotesPage = () => {
                           type="number"
                           min="0"
                           max="100"
+                          step="any"
                           value={quoteForm.porcentaje_anticipo}
                           onChange={(e) =>
-                            setQuoteForm({ ...quoteForm, porcentaje_anticipo: e.target.value })
+                            setQuoteForm((prev) => ({
+                              ...prev,
+                              porcentaje_anticipo: e.target.value,
+                            }))
                           }
-                          className="w-full h-8 px-2.5 bg-zinc-950/70 border border-zinc-800 rounded-lg text-xs text-zinc-200 outline-none"
+                          className="w-full h-8 px-2.5 bg-zinc-950/70 border border-zinc-800 rounded-lg text-xs text-zinc-200 outline-none focus:border-amber-400 transition-colors"
                         />
                       </div>
 
@@ -2167,11 +2303,13 @@ export const QuotesPage = () => {
                         <input
                           type="number"
                           min="1"
+                          max="3650"
+                          step="1"
                           value={quoteForm.vigencia_dias}
                           onChange={(e) =>
-                            setQuoteForm({ ...quoteForm, vigencia_dias: e.target.value })
+                            setQuoteForm((prev) => ({ ...prev, vigencia_dias: e.target.value }))
                           }
-                          className="w-full h-8 px-2.5 bg-zinc-950/70 border border-zinc-800 rounded-lg text-xs text-zinc-200 outline-none"
+                          className="w-full h-8 px-2.5 bg-zinc-950/70 border border-zinc-800 rounded-lg text-xs text-zinc-200 outline-none focus:border-amber-400 transition-colors"
                         />
                       </div>
 
@@ -2184,9 +2322,9 @@ export const QuotesPage = () => {
                           type="text"
                           value={quoteForm.tiempo_entrega}
                           onChange={(e) =>
-                            setQuoteForm({ ...quoteForm, tiempo_entrega: e.target.value })
+                            setQuoteForm((prev) => ({ ...prev, tiempo_entrega: e.target.value }))
                           }
-                          className="w-full h-8 px-2.5 bg-zinc-950/70 border border-zinc-800 rounded-lg text-xs text-zinc-200 outline-none"
+                          className="w-full h-8 px-2.5 bg-zinc-950/70 border border-zinc-800 rounded-lg text-xs text-zinc-200 outline-none focus:border-amber-400 transition-colors"
                         />
                       </div>
 
@@ -2199,9 +2337,24 @@ export const QuotesPage = () => {
                           type="text"
                           value={quoteForm.condiciones_pago}
                           onChange={(e) =>
-                            setQuoteForm({ ...quoteForm, condiciones_pago: e.target.value })
+                            setQuoteForm((prev) => ({ ...prev, condiciones_pago: e.target.value }))
                           }
-                          className="w-full h-8 px-2.5 bg-zinc-950/70 border border-zinc-800 rounded-lg text-xs text-zinc-200 outline-none"
+                          className="w-full h-8 px-2.5 bg-zinc-950/70 border border-zinc-800 rounded-lg text-xs text-zinc-200 outline-none focus:border-amber-400 transition-colors"
+                        />
+                      </div>
+
+                      {/* Notas fiscales / IVA */}
+                      <div className="sm:col-span-3 space-y-1">
+                        <label className="text-[11px] font-poppins text-zinc-400 block font-semibold">
+                          Notas legales / IVA
+                        </label>
+                        <textarea
+                          rows={2}
+                          value={quoteForm.notas_legales}
+                          onChange={(e) =>
+                            setQuoteForm((prev) => ({ ...prev, notas_legales: e.target.value }))
+                          }
+                          className="w-full px-2.5 py-1.5 bg-zinc-950/70 border border-zinc-800 rounded-lg text-xs text-zinc-200 outline-none focus:border-amber-400 transition-colors resize-none"
                         />
                       </div>
                     </div>
@@ -2418,11 +2571,7 @@ export const QuotesPage = () => {
               </div>
 
               {/* Datos de Cabecera del Detalle */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 p-3 bg-zinc-950/60 border border-zinc-800 rounded-xl text-xs font-poppins">
-                <div>
-                  <span className="text-zinc-500 block text-[10px]">Atención a</span>
-                  <span className="text-zinc-200 truncate block">{selectedQuoteDetail.atencion_a || '—'}</span>
-                </div>
+              <div className="grid grid-cols-3 gap-2.5 sm:gap-3 p-3 bg-zinc-950/60 border border-zinc-800 rounded-xl text-xs font-poppins">
                 <div>
                   <span className="text-zinc-500 block text-[10px]">Fecha</span>
                   <span className="text-zinc-200 block">
@@ -2434,7 +2583,7 @@ export const QuotesPage = () => {
                 <div>
                   <span className="text-zinc-500 block text-[10px]">Moneda</span>
                   <span className="text-zinc-200 block">
-                    {selectedQuoteDetail.moneda} ({selectedQuoteDetail.porcentaje_anticipo}%)
+                    {selectedQuoteDetail.moneda} ({Number(selectedQuoteDetail.porcentaje_anticipo ?? 50)}%)
                   </span>
                 </div>
                 <div>
@@ -2444,6 +2593,104 @@ export const QuotesPage = () => {
                   </span>
                 </div>
               </div>
+
+              {/* Atención a (Correo) con registro de envíos anteriores */}
+              {(() => {
+                const activeEmail =
+                  selectedQuoteDetail.correo_contacto || selectedQuoteDetail.atencion_a || '';
+                const looksLikeEmail = activeEmail.includes('@');
+                return (
+                  <div className="p-3 bg-zinc-950/60 border border-zinc-800 rounded-xl space-y-2">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="text-xs font-poppins text-zinc-300 font-semibold flex items-center gap-1.5">
+                        <Mail className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                        <span>Atención a (Correo)</span>
+                      </span>
+
+                      {!isEditingDetailEmail && (
+                        <div className="flex items-center gap-1.5">
+                          {activeEmail && (
+                            <button
+                              type="button"
+                              onClick={() => handleCopyEmail(activeEmail)}
+                              className="px-2 py-1 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-[11px] font-inter text-zinc-300 hover:text-white inline-flex items-center gap-1 transition-colors cursor-pointer"
+                              title="Copiar correo"
+                            >
+                              <Copy className="w-3 h-3" />
+                              <span>Copiar</span>
+                            </button>
+                          )}
+                          {looksLikeEmail && (
+                            <a
+                              href={`mailto:${activeEmail}?subject=${encodeURIComponent(
+                                `Cotización ${selectedQuoteDetail.numero_presupuesto} - ${selectedQuoteDetail.nombre_proyecto}`
+                              )}`}
+                              className="px-2 py-1 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-[11px] font-inter text-amber-300 inline-flex items-center gap-1 transition-colors"
+                              title="Redactar correo al destinatario"
+                            >
+                              <Send className="w-3 h-3" />
+                              <span>Redactar</span>
+                            </a>
+                          )}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setDetailEmailValue(activeEmail);
+                              setIsEditingDetailEmail(true);
+                            }}
+                            className="px-2 py-1 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-[11px] font-inter text-amber-400 hover:text-amber-300 inline-flex items-center gap-1 transition-colors cursor-pointer"
+                          >
+                            <Pencil className="w-3 h-3" />
+                            <span>{activeEmail ? 'Cambiar' : 'Registrar correo'}</span>
+                          </button>
+                        </div>
+                      )}
+                    </div>
+
+                    {isEditingDetailEmail ? (
+                      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                        <EmailRegistryInput
+                          required
+                          className="flex-1"
+                          value={detailEmailValue}
+                          onChange={setDetailEmailValue}
+                          savedEmails={savedEmails}
+                          clienteId={selectedQuoteDetail.cliente_id}
+                          onSaveNew={handleSaveNewEmail}
+                          onDeleteSaved={handleDeleteSavedEmail}
+                          placeholder="Elegir correo anterior o escribir uno nuevo..."
+                        />
+                        <div className="flex items-center gap-1.5 shrink-0">
+                          <button
+                            type="button"
+                            onClick={handleSaveDetailEmail}
+                            disabled={isSavingDetailEmail}
+                            className="h-9 px-3 rounded-xl btn-mts-primary text-xs font-poppins font-semibold cursor-pointer disabled:opacity-50"
+                          >
+                            {isSavingDetailEmail ? 'Guardando...' : 'Guardar'}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setIsEditingDetailEmail(false)}
+                            disabled={isSavingDetailEmail}
+                            className="h-9 px-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-xs font-inter text-zinc-400 hover:text-zinc-200 cursor-pointer"
+                          >
+                            Cancelar
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="text-xs font-inter text-zinc-200 truncate">
+                        {activeEmail || (
+                          <span className="text-zinc-500">
+                            Sin correo asignado. Regístralo para reutilizarlo en futuras cotizaciones.
+                          </span>
+                        )}
+                      </p>
+                    )}
+                  </div>
+                );
+              })()}
 
               {/* Listado de Partidas Técnicas Registradas (Sólo Lectura en Detalle) */}
               <div className="space-y-2.5 sm:space-y-3">

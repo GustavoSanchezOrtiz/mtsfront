@@ -45,8 +45,11 @@ export const TermsOfServicePage = () => {
       </a>
 
       {/* Encabezado público accesible */}
-      <header className="sticky top-0 z-40 h-14 backdrop-blur-2xl backdrop-saturate-150 bg-zinc-900/80 border-b border-white/[0.08] px-4 sm:px-6 flex items-center justify-between gap-4">
-        <div className="max-w-5xl w-full mx-auto flex items-center justify-between gap-3">
+      <header
+        style={{ paddingTop: 'var(--header-top-offset, env(safe-area-inset-top, 0px))' }}
+        className="sticky top-0 z-40 bg-zinc-950/95 md:bg-zinc-900/80 md:backdrop-blur-2xl md:backdrop-saturate-150 border-b border-white/[0.08] px-4 sm:px-6"
+      >
+        <div className="h-14 max-w-5xl w-full mx-auto flex items-center justify-between gap-3">
           <Link
             to={isLoggedIn ? '/' : '/login'}
             className="flex items-center gap-2.5 shrink-0 rounded-lg p-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
@@ -190,10 +193,10 @@ export const TermsOfServicePage = () => {
                 <span>3. Seguridad de la cuenta y sesiones</span>
               </h2>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                El acceso se realiza mediante Google OAuth 2.0. Por seguridad operativa, el sistema
-                mantiene una única sesión activa por usuario; iniciar sesión en un nuevo dispositivo
-                cerrará automáticamente la sesión anterior. Cada usuario es responsable de la
-                actividad realizada bajo su cuenta.
+                El acceso se realiza mediante Google OAuth 2.0 y permite mantener sesiones activas
+                en los dispositivos autorizados del usuario. Ante baja laboral, cambio de rol o
+                desactivación de cuenta, la administración puede revocar el acceso de forma
+                inmediata. Cada usuario es responsable de la actividad realizada bajo su cuenta.
               </p>
             </section>
 

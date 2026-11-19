@@ -128,6 +128,68 @@ export const MainLayout = () => {
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col font-sans antialiased selection:bg-[#66530F] selection:text-white">
+      {/* Header superior unificado: sin backdrop-blur ni pointer-events en móvil para no bloquear el botón Menú en iOS PWA */}
+      <header
+        style={{ paddingTop: 'var(--header-top-offset, env(safe-area-inset-top, 0px))' }}
+        className="sticky top-0 z-40 bg-zinc-950/95 md:bg-zinc-900/75 md:backdrop-blur-2xl md:backdrop-saturate-150 border-b border-white/[0.08] pointer-events-none md:pointer-events-auto"
+      >
+        <div className="h-14 px-4 sm:px-6 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-4 lg:gap-6 min-w-0">
+            <Link to="/" className="hidden md:flex items-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#a38418] rounded-lg" title="Inicio MTS">
+              <img src={logoMts} alt="MTS" className="h-8 w-auto object-contain select-none" />
+            </Link>
+
+            <nav aria-label="Navegación principal" className="hidden md:flex items-center p-1 bg-zinc-950/70 border border-zinc-800/70 rounded-xl space-x-0.5 overflow-x-auto max-w-[calc(100vw-240px)]">
+              {navLinks.map(({ to, label, icon: Icon }) => {
+                const isActive =
+                  to === '/' ? location.pathname === '/' : location.pathname.startsWith(to);
+                return (
+                  <Link
+                    key={to}
+                    to={to}
+                    aria-current={isActive ? 'page' : undefined}
+                    className={`flex items-center gap-1.5 px-2.5 lg:px-3 py-1.5 rounded-lg text-xs whitespace-nowrap transition-all active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#a38418] ${
+                      isActive
+                        ? 'btn-mts-primary font-semibold'
+                        : 'border border-transparent text-zinc-400 hover:text-zinc-100 hover:bg-white/[0.06] font-medium'
+                    }`}
+                  >
+                    <Icon className="w-3.5 h-3.5 shrink-0" />
+                    <span>{label}</span>
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
+
+          <div className="hidden md:flex items-center gap-3 shrink-0">
+            <Link
+              to="/usuarios"
+              className="text-right hidden lg:block hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#a38418] rounded-lg px-1"
+              title="Ver perfil operativo"
+            >
+              <p className="text-xs font-medium text-zinc-200 leading-tight truncate max-w-[160px]">
+                {user?.nombre || user?.correo || 'Operador'}
+              </p>
+              <p className="text-[10px] text-zinc-400 font-inter">
+                {user?.rol === 'admin' ? 'Administrador' : 'Empleado'}
+              </p>
+            </Link>
+
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-zinc-400 hover:text-rose-300 bg-zinc-900/80 hover:bg-rose-950/50 active:bg-rose-950/80 active:scale-[0.98] border border-zinc-800/80 hover:border-rose-800/60 rounded-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 cursor-pointer"
+              title="Cerrar Sesión Segura"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Salir</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Menú móvil montado después del header y con z-index superior + safe-area iOS */}
       <StaggeredMenu
         position="right"
         items={mobileNavItems}
@@ -161,62 +223,6 @@ export const MainLayout = () => {
         }}
       />
 
-      {/* Header superior unificado (Functional Layer - Liquid Glass HIG) */}
-      <header className="sticky top-0 z-50 h-14 backdrop-blur-2xl backdrop-saturate-150 bg-zinc-900/75 border-b border-white/[0.08] px-4 sm:px-6 flex items-center justify-between gap-4">
-        <div className="flex items-center gap-4 lg:gap-6 min-w-0">
-          <Link to="/" className="flex items-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#a38418] rounded-lg" title="Inicio MTS">
-            <img src={logoMts} alt="MTS" className="h-8 w-auto object-contain select-none" />
-          </Link>
-
-          <nav aria-label="Navegación principal" className="hidden md:flex items-center p-1 bg-zinc-950/70 border border-zinc-800/70 rounded-xl space-x-0.5 overflow-x-auto max-w-[calc(100vw-240px)]">
-            {navLinks.map(({ to, label, icon: Icon }) => {
-              const isActive =
-                to === '/' ? location.pathname === '/' : location.pathname.startsWith(to);
-              return (
-                <Link
-                  key={to}
-                  to={to}
-                  aria-current={isActive ? 'page' : undefined}
-                  className={`flex items-center gap-1.5 px-2.5 lg:px-3 py-1.5 rounded-lg text-xs whitespace-nowrap transition-all active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#a38418] ${
-                    isActive
-                      ? 'btn-mts-primary font-semibold'
-                      : 'border border-transparent text-zinc-400 hover:text-zinc-100 hover:bg-white/[0.06] font-medium'
-                  }`}
-                >
-                  <Icon className="w-3.5 h-3.5 shrink-0" />
-                  <span>{label}</span>
-                </Link>
-              );
-            })}
-          </nav>
-        </div>
-
-        <div className="hidden md:flex items-center gap-3 shrink-0">
-          <Link
-            to="/usuarios"
-            className="text-right hidden lg:block hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#a38418] rounded-lg px-1"
-            title="Ver perfil operativo"
-          >
-            <p className="text-xs font-medium text-zinc-200 leading-tight truncate max-w-[160px]">
-              {user?.nombre || user?.correo || 'Operador'}
-            </p>
-            <p className="text-[10px] text-zinc-400 font-inter">
-              {user?.rol === 'admin' ? 'Administrador' : 'Empleado'}
-            </p>
-          </Link>
-
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-zinc-400 hover:text-rose-300 bg-zinc-900/80 hover:bg-rose-950/50 active:bg-rose-950/80 active:scale-[0.98] border border-zinc-800/80 hover:border-rose-800/60 rounded-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 cursor-pointer"
-            title="Cerrar Sesión Segura"
-          >
-            <LogOut className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Salir</span>
-          </button>
-        </div>
-      </header>
-
       <main className="flex-1 w-full max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 py-6">
         <Suspense
           fallback={
@@ -228,7 +234,10 @@ export const MainLayout = () => {
           <Outlet />
         </Suspense>
       </main>
-      <footer className="border-t border-zinc-800/70 bg-zinc-950/60 py-3 px-4 sm:px-6 lg:px-8 xl:px-10">
+      <footer
+        style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom, 0px))' }}
+        className="border-t border-zinc-800/70 bg-zinc-950/60 pt-3 px-4 sm:px-6 lg:px-8 xl:px-10"
+      >
         <div className="max-w-[1720px] mx-auto flex flex-wrap items-center justify-between gap-2 text-xs text-zinc-500">
           <span>MTS Ingeniería Industrial &bull; Plataforma de Gestión</span>
           <div className="flex flex-wrap items-center gap-4">

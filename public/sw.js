@@ -5,7 +5,7 @@
  * - CERO caché en endpoints de API (/api/v1/*) para garantizar seguridad y datos en tiempo real.
  */
 
-const CACHE_NAME = 'mts-pwa-shell-v2';
+const CACHE_NAME = 'mts-pwa-shell-v3';
 
 const STATIC_PRECACHE = [
   '/',

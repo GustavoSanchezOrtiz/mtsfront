@@ -49,8 +49,11 @@ export const PrivacyPolicyPage = () => {
       </a>
 
       {/* Encabezado público accesible */}
-      <header className="sticky top-0 z-40 h-14 backdrop-blur-2xl backdrop-saturate-150 bg-zinc-900/80 border-b border-white/[0.08] px-4 sm:px-6 flex items-center justify-between gap-4">
-        <div className="max-w-5xl w-full mx-auto flex items-center justify-between gap-3">
+      <header
+        style={{ paddingTop: 'var(--header-top-offset, env(safe-area-inset-top, 0px))' }}
+        className="sticky top-0 z-40 bg-zinc-950/95 md:bg-zinc-900/80 md:backdrop-blur-2xl md:backdrop-saturate-150 border-b border-white/[0.08] px-4 sm:px-6"
+      >
+        <div className="h-14 max-w-5xl w-full mx-auto flex items-center justify-between gap-3">
           <Link
             to={isLoggedIn ? '/' : '/login'}
             className="flex items-center gap-2.5 shrink-0 rounded-lg p-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
@@ -274,10 +277,10 @@ export const PrivacyPolicyPage = () => {
               </p>
               <p className="text-sm text-zinc-300 leading-relaxed">
                 Para ello, el navegador guarda únicamente en <code className="text-xs text-zinc-200">localStorage</code>{' '}
-                los tokens de sesión y los datos básicos de tu perfil autenticado. Adicionalmente, el
-                backend aplica control de <strong className="text-zinc-100">sesión única activa</strong>{' '}
-                (<code className="text-xs text-zinc-200">active_session_id</code>), por lo que
-                iniciar sesión en un nuevo dispositivo revoca de inmediato la sesión anterior.
+                los tokens de sesión y los datos básicos de tu perfil autenticado. Puedes mantener
+                sesiones activas en múltiples dispositivos de forma simultánea; si un administrador
+                modifica tu rol o desactiva tu cuenta, el servidor revoca de inmediato todas las
+                sesiones asociadas.
               </p>
               <p className="text-sm text-zinc-300 leading-relaxed">
                 No utilizamos cookies de rastreo publicitario, perfiles de comportamiento ni
@@ -360,10 +363,10 @@ export const PrivacyPolicyPage = () => {
                 <span>7. Derechos del titular, revocación y contacto</span>
               </h2>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                En todo momento puedes cerrar sesión desde la plataforma, acción que revoca de
-                inmediato tu identificador de sesión en el servidor y elimina los tokens guardados
-                en tu navegador. También puedes revocar el acceso otorgado a esta aplicación
-                directamente desde los permisos de seguridad de tu Cuenta de Google.
+                En todo momento puedes cerrar sesión desde la plataforma, acción que elimina los
+                tokens guardados en tu dispositivo actual. También puedes revocar el acceso
+                otorgado a esta aplicación directamente desde los permisos de seguridad de tu Cuenta
+                de Google.
               </p>
               <p className="text-sm text-zinc-300 leading-relaxed">
                 Si necesitas consultar, actualizar, rectificar o solicitar la desactivación o
